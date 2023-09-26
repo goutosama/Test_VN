@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://dialogs/Pc.gd" type="Script" id=1]
 [ext_resource path="res://styles/characterTab.stylebox" type="StyleBox" id=2]
+[ext_resource path="res://dialogs/TextLogItem.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 15.0
@@ -22,6 +23,7 @@ corner_radius_bottom_left = 10
 [node name="LogItem" type="PanelContainer"]
 margin_right = 972.0
 margin_bottom = 92.0
+script = ExtResource( 3 )
 
 [node name="VBox" type="VBoxContainer" parent="."]
 margin_left = 7.0

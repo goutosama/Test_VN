@@ -58,8 +58,11 @@ func _continue_story():
 		var newLine = TextLine.new()
 		newLine.text = _ink_player.continue_story()
 		newLine.name = _ink_player.get_variable("name")
+		print(newLine.name)
 		charName = newLine.name
+		print(charName)
 		textBox.text = newLine.text
+		charNameBox.get_node("Center/Label").text = newLine.name
 		charNameBox.checkName()
 		textArray.append(newLine)
 		if textArray.size() > 4:
@@ -94,7 +97,7 @@ func _select_choice(index):
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_select"):
 		_continue_story()
-	if Input.is_action_just_pressed("ui_page_down"):
+	if Input.is_action_just_pressed("ui_down"):
 		if $PopupPanel.visible == false:
 			$PopupPanel.popup()
 		else:

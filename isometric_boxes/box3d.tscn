@@ -57,5 +57,5 @@ mesh = SubResource( 5 )
 transform = Transform( 16, 0, 0, 0, 16, 0.0262497, 0, -0.0262497, 16, 0.11, -0.072, 0 )
 billboard = 1
 frames = ExtResource( 4 )
-frame = 2
+frame = 1
 playing = true

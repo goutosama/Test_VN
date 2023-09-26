@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Images/Chiaki (1).png" type="Texture" id=1]
-[ext_resource path="res://rus_test_file.ink.json" type="Resource" id=2]
+[ext_resource path="res://test_file.ink.json" type="Resource" id=2]
 [ext_resource path="res://styles/dialogWinBackground.stylebox" type="StyleBox" id=3]
 [ext_resource path="res://styles/characterTab.stylebox" type="StyleBox" id=4]
 [ext_resource path="res://dialogs/dialogChoiceWindow.tscn" type="PackedScene" id=5]
