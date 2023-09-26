@@ -31,33 +31,37 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
 margin_right = 972.0
-margin_bottom = 976.0
+margin_bottom = 1116.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LogItem0" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_bottom = 136.0
 
-[node name="LogItem2" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="LogItem1" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 140.0
 margin_bottom = 276.0
 
-[node name="LogItem3" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="LogItem2" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 280.0
 margin_bottom = 416.0
 
-[node name="LogItem4" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="LogItem3" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 420.0
 margin_bottom = 556.0
 
-[node name="LogItem5" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="LogItem4" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 560.0
 margin_bottom = 696.0
 
-[node name="LogItem6" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="LogItem5" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 700.0
 margin_bottom = 836.0
 
-[node name="LogItem7" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="LogItem6" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 840.0
 margin_bottom = 976.0
+
+[node name="LogItem7" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 980.0
+margin_bottom = 1116.0

@@ -11,7 +11,7 @@ func _ready():
 	visible = false
 	pass # Replace with function body.
 
-func checkName():
+func hideEmpty():
 	if get_node("Center/Label").text == "":
 		visible = false
 	else:

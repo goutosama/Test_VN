@@ -19,12 +19,14 @@ onready var _ink_player = $InkPlayer
 # ############################################################################ #
 # Lifecycle
 # ############################################################################ #
-onready var charName = get_node("DialogueWindow/textWindow/M/HBox/VBox/M2/Pc/Center/Label").text
 onready var charNameBox = get_node("DialogueWindow/textWindow/M/HBox/VBox/M2/Pc")
 onready var textBox = get_node("DialogueWindow/textWindow/M/HBox/VBox/M/Pc/RichTextLabel")
 onready var choiceWindow = get_node("ChoiceWindow")
 
+export (int) var maxTextLogLine = 8
+
 onready var textArray = []
+onready var choices = []
 
 class TextLine:
 	var name
@@ -53,21 +55,31 @@ func _story_loaded(successfully: bool):
 # Private Methods
 # ############################################################################ #
 
-func _continue_story():
+func _continue_story(isChoice: bool):
 	if _ink_player.can_continue:
 		var newLine = TextLine.new()
 		newLine.text = _ink_player.continue_story()
 		newLine.name = _ink_player.get_variable("name")
-		print(newLine.name)
-		charName = newLine.name
-		print(charName)
 		textBox.text = newLine.text
 		charNameBox.get_node("Center/Label").text = newLine.name
-		charNameBox.checkName()
+		charNameBox.hideEmpty()
+		if isChoice:
+			var choose = newLine.text
+			newLine.text = ""
+			for n in choices.size():
+				if choices[n] + "\n" == choose:
+					choices[n] = "You choose " + choose
+					newLine.text += choices[n] + "\n"
+				else:
+					newLine.text += choices[n] + "\n \n"
+			choices = []
+
 		textArray.append(newLine)
-		if textArray.size() > 4:
+		if textArray.size() > maxTextLogLine:
 			textArray.pop_front()
+		$PopupPanel/TextLog.on_log_update(textArray)
 		return
+		
 		# This text is a line of text from the ink story.
 		# Set the text of a Label to this value to display it in your game.
 	if _ink_player.has_choices:
@@ -75,6 +87,8 @@ func _continue_story():
 		choiceWindow.button1.text = _ink_player.current_choices[0]
 		choiceWindow.button2.text = _ink_player.current_choices[1]
 		choiceWindow.button3.text = _ink_player.current_choices[2]
+		
+		choices = _ink_player.current_choices
 	else: 
 		if !(_ink_player.can_continue):
 			theEnd()
@@ -90,13 +104,13 @@ func theEnd():
 
 func _select_choice(index):
 	_ink_player.choose_choice_index(index)
-	_continue_story()
-	_continue_story()
+	_continue_story(true)
+	_continue_story(false)
 	choiceWindow.visible = false
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_select"):
-		_continue_story()
+	if Input.is_action_just_pressed("ui_select") && $PopupPanel.visible == false:
+		_continue_story(false)
 	if Input.is_action_just_pressed("ui_down"):
 		if $PopupPanel.visible == false:
 			$PopupPanel.popup()
