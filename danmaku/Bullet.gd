@@ -1,30 +1,3 @@
-#extends Area2D
-
-
-#export var speed = 3 # How fast the player will move (pixels/sec).
-#export var direction = -0.5 #radians
-#export var game_field = [800,500, 180, 180] # Size of the game window.
-
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-#	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	var velocity = Vector2.ZERO # The bullet's movement vector.
-#	velocity.x = 1
-#	velocity.posmod(direction)
-#	position += velocity * speed
-#	position.x = clamp(position.x, game_field[2], game_field[0])
-#	position.y = clamp(position.y, game_field[3], game_field[1])
-#	if velocity.length() > 0:
-#		velocity = velocity.normalized() * speed
-#	print(velocity)
-#
-
-
-
 extends Node2D
 # This demo is an example of controling a high number of 2D objects with logic
 # and collision without using nodes in the scene. This technique is a lot more
@@ -37,7 +10,7 @@ const SPEED_MAX = 80
 
 const bullet_image = preload("res://danmaku/BulletSprite.tres")
 
-var bullets := []
+var bullets = []
 var shape
 
 
@@ -51,37 +24,43 @@ class Bullet:
 
 
 func _ready():
-	shape = PhysicsServer2D.circle_shape_create()
+	
+	randomize()
+
+	shape = Physics2DServer.circle_shape_create()
 	# Set the collision shape's radius for each bullet in pixels.
-	PhysicsServer2D.shape_set_data(shape, 8)
+	Physics2DServer.shape_set_data(shape, 8)
 
 	for _i in BULLET_COUNT:
 		var bullet = Bullet.new()
-		# Give each bullet its own random speed.
-		bullet.speed = randf_range(SPEED_MIN, SPEED_MAX)
-		bullet.body = PhysicsServer2D.body_create()
 
-		PhysicsServer2D.body_set_space(bullet.body, get_world_2d().get_space())
-		PhysicsServer2D.body_add_shape(bullet.body, shape)
+		# Give each bullet its own speed.
+		bullet.speed = rand_range(SPEED_MIN, SPEED_MAX)
+		bullet.body = Physics2DServer.body_create()
+
+		Physics2DServer.body_set_space(bullet.body, get_world_2d().get_space())
+		Physics2DServer.body_add_shape(bullet.body, shape)
 		# Don't make bullets check collision with other bullets to improve performance.
-		PhysicsServer2D.body_set_collision_mask(bullet.body, 0)
+		# Their collision mask is still configured to the default value, which allows
+		# bullets to detect collisions with the player.
+		Physics2DServer.body_set_collision_layer(bullet.body, 0)
 
 		# Place bullets randomly on the viewport and move bullets outside the
 		# play area so that they fade in nicely.
 		bullet.position = Vector2(
-			randf_range(0, get_viewport_rect().size.x) + get_viewport_rect().size.x,
-			randf_range(0, get_viewport_rect().size.y)
+			rand_range(0, get_viewport_rect().size.x) + get_viewport_rect().size.x,
+			rand_range(0, get_viewport_rect().size.y)
 		)
 		var transform2d = Transform2D()
 		transform2d.origin = bullet.position
-		PhysicsServer2D.body_set_state(bullet.body, PhysicsServer2D.BODY_STATE_TRANSFORM, transform2d)
+		Physics2DServer.body_set_state(bullet.body, Physics2DServer.BODY_STATE_TRANSFORM, transform2d)
 
 		bullets.push_back(bullet)
 
 
 func _process(_delta):
 	# Order the CanvasItem to update every frame.
-	queue_redraw()
+	update()
 
 
 func _physics_process(delta):
@@ -91,25 +70,29 @@ func _physics_process(delta):
 		bullet.position.x -= bullet.speed * delta
 
 		if bullet.position.x < -16:
-			# Move the bullet back to the right when it left the screen.
+			# The bullet has left the screen; move it back to the right.
 			bullet.position.x = offset
 
 		transform2d.origin = bullet.position
-		PhysicsServer2D.body_set_state(bullet.body, PhysicsServer2D.BODY_STATE_TRANSFORM, transform2d)
+
+		Physics2DServer.body_set_state(bullet.body, Physics2DServer.BODY_STATE_TRANSFORM, transform2d)
 
 
 # Instead of drawing each bullet individually in a script attached to each bullet,
 # we are drawing *all* the bullets at once here.
+var frameCounter = 0
 func _draw():
-	var offset = -bullet_image.get_size() * 0.5
+	var offset = -bullet_image.get_frame("default", frameCounter).get_size() * 0.5
 	for bullet in bullets:
-		draw_texture(bullet_image, bullet.position + offset)
-
+		draw_texture(bullet_image.get_frame("default", frameCounter), bullet.position + offset)
+	frameCounter += 1
+	if frameCounter >= bullet_image.get_frame_count("default"):
+		frameCounter = 0
 
 # Perform cleanup operations (required to exit without error messages in the console).
 func _exit_tree():
 	for bullet in bullets:
-		PhysicsServer2D.free_rid(bullet.body)
+		Physics2DServer.free_rid(bullet.body)
 
-	PhysicsServer2D.free_rid(shape)
+	Physics2DServer.free_rid(shape)
 	bullets.clear()

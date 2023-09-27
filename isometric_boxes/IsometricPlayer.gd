@@ -4,6 +4,7 @@ export var speed = 7 # How fast the player will move (pixels/sec).
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	pass # Replace with function body.
 
 
@@ -12,17 +13,22 @@ func _physics_process(delta):
 	#var current_state = state_machine.get_current_node()
 	var velocity = Vector3.ZERO # The player's movement vector.
 	if Input.is_action_pressed("ui_right"):
+		velocity.z = -1
 		velocity.x = 1
 		#$AnimatedSprite.flip_h = true
 
 	if Input.is_action_pressed("ui_left"):
+		velocity.z = 1
 		velocity.x = -1
 		#$AnimatedSprite.flip_h = false
 
 	if Input.is_action_pressed("ui_down"):
-		velocity.y = 1
+		velocity.x = 1
+		velocity.z = 1
+		
 	if Input.is_action_pressed("ui_up"):
-		velocity.y = -1
+		velocity.x = -1
+		velocity.z = -1
 		
 #	if Input.is_action_just_pressed("ui_right"):
 
