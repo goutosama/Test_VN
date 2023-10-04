@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://danmaku/battleUI.gd" type="Script" id=1]
+[ext_resource path="res://danmaku/bombsCount.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://danmaku/hpCount.tres" type="SpriteFrames" id=3]
+
+[node name="Battle UI" type="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 253, -53 )
+rotation = -1.5708
+scale = Vector2( 3, 3 )
+frames = ExtResource( 2 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+position = Vector2( 362, -35 )
+scale = Vector2( 4, 4 )
+frames = ExtResource( 3 )
