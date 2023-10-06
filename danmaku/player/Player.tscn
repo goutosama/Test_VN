@@ -1,0 +1,214 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimu1.png" type="Texture" id=1]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimu2.png" type="Texture" id=2]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimu0.png" type="Texture" id=3]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimu3.png" type="Texture" id=4]
+[ext_resource path="res://danmaku/player/Player.gd" type="Script" id=5]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuT4TD0.png" type="Texture" id=6]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuT0.png" type="Texture" id=7]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuT1.png" type="Texture" id=8]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuT2.png" type="Texture" id=9]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuTD1.png" type="Texture" id=10]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuTD2.png" type="Texture" id=11]
+[ext_resource path="res://danmaku/Placeholder Assets/reimu_placeholder_sprites/reimuT3.png" type="Texture" id=12]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.52268
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "Tilt",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "TiltIdle",
+"speed": 5.0
+} ]
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "ReimuIdle"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "ReimuTilt"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "ReimuTiltIdle"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "ReimuTiltRev"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachine" id=11]
+states/ReimuIdle/node = SubResource( 3 )
+states/ReimuIdle/position = Vector2( 525, 52 )
+states/ReimuTilt/node = SubResource( 4 )
+states/ReimuTilt/position = Vector2( 640, 198 )
+states/ReimuTiltIdle/node = SubResource( 5 )
+states/ReimuTiltIdle/position = Vector2( 421, 327 )
+states/ReimuTiltRev/node = SubResource( 6 )
+states/ReimuTiltRev/position = Vector2( 293, 173 )
+transitions = [ "ReimuTilt", "ReimuTiltIdle", SubResource( 7 ), "ReimuIdle", "ReimuTilt", SubResource( 8 ), "ReimuTiltIdle", "ReimuTiltRev", SubResource( 9 ), "ReimuTiltRev", "ReimuIdle", SubResource( 10 ), "ReimuTilt", "ReimuTiltRev", SubResource( 17 ) ]
+start_node = "ReimuIdle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
+
+[sub_resource type="Animation" id=13]
+resource_name = "ReimuIdle"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Idle" ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "ReimuTilt"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Tilt" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "ReimuTiltIdle"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "TiltIdle" ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "ReimuTiltRev"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Tilt" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 3, 2, 1, 0 ]
+}
+
+[node name="Player" type="Area2D"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 2, 2 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
+frames = SubResource( 2 )
+animation = "Idle"
+frame = 3
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 11 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 12 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/ReimuIdle = SubResource( 13 )
+anims/ReimuTilt = SubResource( 14 )
+anims/ReimuTiltIdle = SubResource( 15 )
+anims/ReimuTiltRev = SubResource( 16 )

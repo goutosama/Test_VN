@@ -3,7 +3,7 @@
 [ext_resource path="res://Images/bg30a0.jpg" type="Texture" id=1]
 [ext_resource path="res://Images/holy-shit-mask-stealer.png" type="Texture" id=2]
 [ext_resource path="res://Images/Chiaki (1).png" type="Texture" id=3]
-[ext_resource path="res://styles/crt_material.tres" type="Material" id=4]
+[ext_resource path="res://shaders/crt_material.tres" type="Material" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 draw_center = false

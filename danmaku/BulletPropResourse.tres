@@ -1,9 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=2]
-
-[ext_resource path="res://danmaku/BulletsObject.gd" type="Script" id=1]
-
-[resource]
-script = ExtResource( 1 )
-speed = 0
-delay = 0
-DirectionSine = 0.0

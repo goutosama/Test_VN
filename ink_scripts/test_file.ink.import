@@ -1,0 +1,13 @@
+[remap]
+
+importer="inkgd.ink"
+type="Resource"
+path="res://.import/test_file.ink-744717f9db01a98e9fbd280426a153f2.res"
+
+[deps]
+
+source_file="res://ink_scripts/test_file.ink"
+dest_files=[ "res://.import/test_file.ink-744717f9db01a98e9fbd280426a153f2.res" ]
+
+[params]
+
