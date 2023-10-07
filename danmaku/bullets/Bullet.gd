@@ -1,8 +1,5 @@
 extends Node2D
 
-const SPEED_MIN = 20
-const SPEED_MAX = 80
-
 const bullet_image = preload("res://danmaku/bullets/BulletSprite.tres")
 const bullet_propsRes: Resource = preload("res://danmaku/bullets/BulletPropResourse.tres")
 
@@ -13,8 +10,19 @@ onready var path := get_node(path2dPath) as Path2D
 # be determined by its previous and next point normal vector, so first and last points will not create bullets
 
 export(Array, Vector3) var ArrayOfPoints 
-# 2d array, each array inside are settings for points angle(tan), delay and speed
+# 2d array, each array inside are settings for points angle(radians), delay and speed
 # first and last element of array will be ignored
+
+# Angle rotates vector obviously (use radian circle to get the angle you want)
+# Delay stops bullet from appearing for a period of time (seconds)
+# Speed is basically speed of the bullet and it is multiplied by 10 internally for each bullet, 
+# 	so that 1 is a very slow speed for a bullet and the more you add, the faster it gets  
+
+export(float) var Scale = 1
+# by default Scale = 1 bullets are 8 pixels in radius which is too small
+
+export(int) var AnimSlowness = 4
+# sounds crazy i know, but this number defines delay in frames between next animation frame and current
 
 var bullets = []
 var shape
@@ -26,7 +34,7 @@ class Bullet:
 	var direction = Vector2()
 	var visible = false
 	var delay = 0
-
+	var currFrame = 0
 	# The body is stored as a RID, which is an "opaque" way to access resources.
 	# With large amounts of objects (thousands or more), it can be significantly
 	# faster to use RIDs compared to a high-level approach.
@@ -42,7 +50,7 @@ func _ready():
 
 	shape = Physics2DServer.circle_shape_create()
 	# Set the collision shape's radius for each bullet in pixels.
-	Physics2DServer.shape_set_data(shape, 8)
+	Physics2DServer.shape_set_data(shape, 8 * Scale)
 	var transform2d = Transform2D()
 
 	for _i in range(1, path.curve.get_point_count() - 1):
@@ -54,7 +62,7 @@ func _ready():
 		print(Vector2(between.y, -between.x).normalized())
 		var direction = Vector2(cos(ArrayOfPoints[_i].z), sin(ArrayOfPoints[_i].z))
 		
-		bullet.direction = (Vector2(between.y, -between.x).normalized() + direction).normalized()
+		bullet.direction = Vector2(between.y * direction.x - (-between.x) * direction.y, between.y * direction.y + (-between.x) * direction.x).normalized()
 		print(bullet.direction)
 		bullet.delay = ArrayOfPoints[_i].y
 		bullet.body = Physics2DServer.body_create()
@@ -67,8 +75,9 @@ func _ready():
 		# Place bullets randomly on the viewport and move bullets outside the
 		# play area so that they fade in nicely.
 		bullet.position = Vector2(path.curve.get_point_position(_i) + path.position)
-			
+		
 		transform2d.origin = bullet.position
+
 		Physics2DServer.body_set_state(bullet.body, Physics2DServer.BODY_STATE_TRANSFORM, transform2d)
 		bullets.push_back(bullet)
 
@@ -87,6 +96,9 @@ func _physics_process(delta):
 			bullet.visible = true
 		
 		if bullet.visible:
+			bullet.currFrame += 1
+			if bullet.currFrame >= bullet_image.get_frame_count("default") * AnimSlowness:
+				bullet.currFrame = 0
 			bullet.position.x += bullet.speed * delta *  bullet.direction.x
 			bullet.position.y += bullet.speed * delta *  bullet.direction.y
 
@@ -106,15 +118,14 @@ func _physics_process(delta):
 
 # Instead of drawing each bullet individually in a script attached to each bullet,
 # we are drawing *all* the bullets at once here.
-var frameCounter = 0
 func _draw():
-	var offset = -bullet_image.get_frame("default", frameCounter).get_size() * 0.5
+	var offset = -bullet_image.get_frame("default", 0).get_size() * 0.5
 	for bullet in bullets:
 		if bullet.visible:
-			draw_texture(bullet_image.get_frame("default", frameCounter), bullet.position + offset)
-	frameCounter += 1
-	if frameCounter >= bullet_image.get_frame_count("default"):
-		frameCounter = 0
+			# we need to compensate scaling by reducing position vector with itself (for whatever reason)
+			draw_set_transform(-bullet.position - offset, 0.0, Vector2(Scale, Scale))
+			draw_texture(bullet_image.get_frame("default", bullet.currFrame/AnimSlowness), bullet.position + offset)
+
 
 # Perform cleanup operations (required to exit without error messages in the console).
 func _exit_tree():

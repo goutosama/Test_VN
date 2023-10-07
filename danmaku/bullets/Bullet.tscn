@@ -1,17 +1,15 @@
 [gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://danmaku/bullets/TestCurve.tres" type="Curve2D" id=1]
 [ext_resource path="res://danmaku/bullets/Bullet.gd" type="Script" id=2]
 
-[sub_resource type="Curve2D" id=1]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 141, 369, 0, 0, 0, 0, 451, 372, 0, 0, 0, 0, 764, 372 )
-}
-
-[node name="Node2D" type="Node2D"]
+[node name="Bullet Node" type="Node2D"]
 script = ExtResource( 2 )
-path2dPath = NodePath("Path2D")
-ArrayOfPoints = [ Vector3( 0, 0, 0 ), Vector3( 1, 2, 4.7 ), Vector3( 1, 0, 0 ), Vector3( 1, 0, 0 ), Vector3( 1, 0, 0 ), Vector3( 1, 5, 0 ), Vector3( 1, 0, 0 ), Vector3( 1, 0, 0 ), Vector3( 1, 5, 0 ), Vector3( 0, 0, 0 ) ]
+path2dPath = NodePath("Curve of Bullets")
+ArrayOfPoints = [ Vector3( 0, 0, 0 ), Vector3( 2, 2, 3.14 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 5, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 5, 0 ), Vector3( 0, 0, 0 ) ]
+Scale = 2.0
+AnimSlowness = 8
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="Curve of Bullets" type="Path2D" parent="."]
 position = Vector2( 59, -103 )
-curve = SubResource( 1 )
+curve = ExtResource( 1 )
