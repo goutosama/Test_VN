@@ -12,7 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	var current_state = state_machine.get_current_node()
+	#var current_state = state_machine.get_current_node()
 	var velocity = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("ui_right"):
 		velocity.x = 1
@@ -52,3 +52,7 @@ func _process(_delta):
 	position.y = clamp(position.y, game_field[3], game_field[1])
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
+
+func _on_body_shape_entered(_body_id, _body, _body_shape, _local_shape):
+	# Player got touched by a bullet so sprite changes to sad face.
+	print("тебе пиздец")
