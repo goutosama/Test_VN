@@ -39,7 +39,7 @@ func _process(_delta):
 		velocity = velocity.normalized() * speed
 
 func _on_Player_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	print("тебе пиздец")
+	print("dead")
 	pass # Replace with function body.
 
 func _on_Player_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):

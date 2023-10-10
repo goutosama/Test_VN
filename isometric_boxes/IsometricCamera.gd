@@ -19,7 +19,7 @@ func _input(event):
 		scene.set_rotation(Vector3(0.0, deg2rad(yaw), 0.0))
 		
 		yaw = fmod(yaw  - mouseVec.x * mouseSensitivity , 360.0)
-	print(scene.get_rotation().y)
+	
 	if scene.get_rotation().y > -2 && scene.get_rotation().y < 1 :
 		room.get_node("Cube001").visible = false
 		room.get_node("Cube002").visible = true
