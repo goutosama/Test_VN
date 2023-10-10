@@ -3,11 +3,13 @@ extends Node2D
 const bullet_image = preload("res://danmaku/bullets/BulletSprite.tres")
 const bullet_propsRes: Resource = preload("res://danmaku/bullets/BulletPropResourse.tres")
 
-export var path2dPath: NodePath #Path2D allows you to place Curve2d, BUT ROTATION WILL BE IGNORED
+export var path2dPath: NodePath 
+#Path2D allows you to place Curve2d, BUT ROTATION WILL BE IGNORED
 onready var path := get_node(path2dPath) as Path2D 
 # Due to how Curve2D works (just as curve with baked points between real points), 
 # we can't make normals with those baked points, so every bullet's direction will
-# be determined by its previous and next point normal vector, so first and last points will not create bullets
+# be determined by its previous and next point normal vector, 
+# so first and last points will not create bullets
 
 export(Array, Vector3) var ArrayOfPoints 
 # 2d array, each array inside are settings for points angle(radians), delay and speed
@@ -18,7 +20,7 @@ export(Array, Vector3) var ArrayOfPoints
 # Speed is basically speed of the bullet and it is multiplied by 10 internally for each bullet, 
 # 	so that 1 is a very slow speed for a bullet and the more you add, the faster it gets  
 
-export(float) var Scale = 1
+export(float) var Scale = 1.0
 # by default Scale = 1 bullets are 8 pixels in radius which is too small
 
 export(int) var AnimSlowness = 4
@@ -35,6 +37,7 @@ class Bullet:
 	var visible = false
 	var delay = 0
 	var currFrame = 0
+	var offscreen = false
 	# The body is stored as a RID, which is an "opaque" way to access resources.
 	# With large amounts of objects (thousands or more), it can be significantly
 	# faster to use RIDs compared to a high-level approach.
@@ -44,9 +47,6 @@ class Bullet:
 
 func _ready():
 	delays.resize(path.curve.get_point_count())
-	print(path.curve.get_point_count())
-	for _i in path.curve.get_point_count():
-		print(path.curve.get_point_position(_i))
 
 	shape = Physics2DServer.circle_shape_create()
 	# Set the collision shape's radius for each bullet in pixels.
@@ -61,9 +61,8 @@ func _ready():
 		var between = path.curve.get_point_position(_i - 1) - path.curve.get_point_position(_i + 1)
 		print(Vector2(between.y, -between.x).normalized())
 		var direction = Vector2(cos(ArrayOfPoints[_i].z), sin(ArrayOfPoints[_i].z))
-		
 		bullet.direction = Vector2(between.y * direction.x - (-between.x) * direction.y, between.y * direction.y + (-between.x) * direction.x).normalized()
-		print(bullet.direction)
+
 		bullet.delay = ArrayOfPoints[_i].y
 		bullet.body = Physics2DServer.body_create()
 		Physics2DServer.body_set_space(bullet.body, get_world_2d().get_space())
@@ -71,7 +70,9 @@ func _ready():
 		# Don't make bullets check collision with other bullets to improve performance.
 		# Their collision mask is still configured to the default value, which allows
 		# bullets to detect collisions with the player.
-		Physics2DServer.body_set_collision_layer(bullet.body, 0)
+		Physics2DServer.body_set_collision_layer(bullet.body, 5)
+		Physics2DServer.body_set_collision_mask(bullet.body, 0)
+		
 		# Place bullets randomly on the viewport and move bullets outside the
 		# play area so that they fade in nicely.
 		bullet.position = Vector2(path.curve.get_point_position(_i) + path.position)
@@ -104,17 +105,18 @@ func _physics_process(delta):
 
 			if bullet.position.x > get_viewport_rect().size.x || bullet.position.x < 0 || bullet.position.y < 0 || bullet.position.y > get_viewport_rect().size.y:
 				# The bullet has left the screen; count it
-				offscreen_bullets += 1
-				print(offscreen_bullets)
-				
-				# if all of them are, you shoul kill yourself NOW
-				if offscreen_bullets == ArrayOfPoints - 2:
-					queue_free()
+				if !(bullet.offscreen):
+					bullet.offscreen = true
+					offscreen_bullets += 1
+			
+			# if all of them are, you should kill yourself NOW
+			if offscreen_bullets == path.curve.get_point_count() - 2:
+
+				queue_free()
 
 			transform2d.origin = bullet.position
 
 			Physics2DServer.body_set_state(bullet.body, Physics2DServer.BODY_STATE_TRANSFORM, transform2d)
-
 
 # Instead of drawing each bullet individually in a script attached to each bullet,
 # we are drawing *all* the bullets at once here.
@@ -126,7 +128,6 @@ func _draw():
 			draw_set_transform(-bullet.position - offset, 0.0, Vector2(Scale, Scale))
 			draw_texture(bullet_image.get_frame("default", bullet.currFrame/AnimSlowness), bullet.position + offset)
 
-
 # Perform cleanup operations (required to exit without error messages in the console).
 func _exit_tree():
 	for bullet in bullets:
@@ -134,3 +135,6 @@ func _exit_tree():
 
 	Physics2DServer.free_rid(shape)
 	bullets.clear()
+
+func _on_Player_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	pass # Replace with function body.

@@ -5,10 +5,6 @@ export var speed = 7 # How fast the player will move (pixels/sec).
 export var game_field = [800,500, 180, 180] # Size of the game window.
 
 onready var state_machine = $AnimationTree.get("parameters/playback")
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -35,17 +31,6 @@ func _process(_delta):
 
 	if velocity.x == 0:
 		state_machine.travel("ReimuIdle")
-	#if velocity.x > 0:
-	#		$AnimatedSprite.play("TiltIdle")
-	#		$AnimatedSprite.flip_h = true
-	#else:
-	#	if velocity.x < 0:
-	#		$AnimatedSprite.play("TiltIdle")
-	#		$AnimatedSprite.flip_h = false
-	#	else:
-	#		if velocity.x == 0:
-	#			$AnimatedSprite.play("Idle")
-	#			$AnimatedSprite.flip_h = false
 
 	position += velocity * speed
 	position.x = clamp(position.x, game_field[2], game_field[0])
@@ -53,6 +38,9 @@ func _process(_delta):
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
 
-func _on_body_shape_entered(_body_id, _body, _body_shape, _local_shape):
-	# Player got touched by a bullet so sprite changes to sad face.
+func _on_Player_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	print("тебе пиздец")
+	pass # Replace with function body.
+
+func _on_Player_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
+	pass # Replace with function body.

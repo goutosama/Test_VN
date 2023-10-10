@@ -16,7 +16,7 @@ rotation = -1.5708
 scale = Vector2( 3, 3 )
 frames = ExtResource( 2 )
 
-[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+[node name="HP Bar" type="AnimatedSprite" parent="."]
 position = Vector2( 362, -35 )
 scale = Vector2( 4, 4 )
 frames = ExtResource( 3 )

@@ -959,7 +959,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/inkgd/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/godot-animation-reverser/plugin.cfg", "res://addons/inkgd/plugin.cfg" )
 
 [gui]
 
