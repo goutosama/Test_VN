@@ -14,7 +14,13 @@ onready var rotateState : bool = false
 onready var counter : int = 0
 onready var rotationSpeed : int = 15
 
-
+func _ready():
+	if rotateState:
+		room.get_node("Cube002").visible = false
+		room.get_node("Cube001").visible = true
+	else:
+		room.get_node("Cube001").visible = false
+		room.get_node("Cube002").visible = true
 # this script no longer rotates the scene, it moves itself
 func _input(event):
 	if event is InputEventMouseMotion and mouseEnabled:

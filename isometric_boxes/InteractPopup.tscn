@@ -6,7 +6,6 @@
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="InteractPopup" type="PopupPanel"]
-visible = true
 margin_left = 431.0
 margin_top = 490.0
 margin_right = 849.0
