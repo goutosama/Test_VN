@@ -1,40 +1,52 @@
 extends KinematicBody
 
-export var speed = 14 # How fast the player will move (pixels/sec).
+export var speed = 1 # How fast the player will move (pixels/sec).
 
 
-onready var cos45 : float = 0.70710678118
+onready var camera = get_parent().get_parent().get_node("Camera Pivot")
+onready var state_machine = $AnimationTree.get("parameters/playback")
+onready var Interact = get_parent().get_parent().get_node("UI/InteractPopup")
 
 func _physics_process(delta):
-	#var current_state = state_machine.get_current_node()
-	var velocity = Vector3.ZERO # The player's movement vector.
+	
+	# we're dividing by 5 because player is waaay too fast (kinda like Sonic)
+	var forward = camera.transform.basis.z.normalized() * speed * 0.2
+	var velocity = Vector3.ZERO
+	#var velocity = Vector3.ZERO # The player's movement vector.
 	if Input.is_action_pressed("ui_right"):
-		velocity.x = 1
-		#$AnimatedSprite.flip_h = true
+		velocity = -forward.cross(Vector3.UP) / 1.5
+		#velocity.z = -1
+		$AnimatedSprite3D.flip_h = false
+		state_machine.travel("SansSideWalk")
+		
 
 	if Input.is_action_pressed("ui_left"):
-		velocity.x = -1
-		#$AnimatedSprite.flip_h = false
+		velocity = forward.cross(Vector3.UP) / 1.5
+
+		$AnimatedSprite3D.flip_h = true
+		state_machine.travel("SansSideWalk")
 
 	if Input.is_action_pressed("ui_down"):
-		velocity.z = 1
+		velocity = forward
+		state_machine.travel("SansWalk")
+
 		
 	if Input.is_action_pressed("ui_up"):
-		velocity.z = -1
+		velocity = -forward
+		state_machine.travel("SansWalkBack")
+	
+	move_and_collide(velocity)
 
-	velocity.x = velocity.x * cos45 - velocity.x * cos45
-	velocity.z = velocity.x * cos45 + velocity.y * cos45
-		
-#	if Input.is_action_just_pressed("ui_right"):
+var firstEnter = false
+func _on_Interact_body_entered(body):
+	if firstEnter:
+		Interact.visible = true
+	else: 
+		firstEnter = true
+	pass # Replace with function body.
 
-#	else:
-#		if Input.is_action_just_pressed("ui_left"):
+func _on_Interact_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
+	Interact.visible = false
+	pass # Replace with function body.
 
 
-#	if velocity.x == 0:
-	print(velocity)
-	move_and_slide(velocity * speed)
-	#position += velocity * speed
-	#position.x = clamp(position.x, game_field[2], game_field[0])
-	#position.y = clamp(position.y, game_field[3], game_field[1])
-	pass
