@@ -11,6 +11,8 @@ onready var path := get_node(path2dPath) as Path2D
 # be determined by its previous and next point normal vector, 
 # so first and last points will not create bullets
 
+export var game_field = [800,500, 180, 180] # Size of the game window.
+
 export(Array, Vector3) var ArrayOfPoints 
 # 2d array, each array inside are settings for points angle(radians), delay and speed
 # first and last element of array will be ignored
@@ -103,7 +105,7 @@ func _physics_process(delta):
 			bullet.position.x += bullet.speed * delta *  bullet.direction.x
 			bullet.position.y += bullet.speed * delta *  bullet.direction.y
 
-			if bullet.position.x > get_viewport_rect().size.x || bullet.position.x < 0 || bullet.position.y < 0 || bullet.position.y > get_viewport_rect().size.y:
+			if bullet.position.x > game_field[0] || bullet.position.x < game_field[2] || bullet.position.y < game_field[3] || bullet.position.y > game_field[1]:
 				# The bullet has left the screen; count it
 				if !(bullet.offscreen):
 					bullet.offscreen = true
@@ -111,7 +113,6 @@ func _physics_process(delta):
 			
 			# if all of them are, you should kill yourself NOW
 			if offscreen_bullets == path.curve.get_point_count() - 2:
-
 				queue_free()
 
 			transform2d.origin = bullet.position

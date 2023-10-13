@@ -22,25 +22,18 @@ func _process(_delta):
 		velocity.y = 1
 	if Input.is_action_pressed("ui_up"):
 		velocity.y = -1
-		
-	if Input.is_action_just_pressed("ui_right"):
-		state_machine.travel("ReimuTiltIdle")
-	else:
-		if Input.is_action_just_pressed("ui_left"):
-			state_machine.travel("ReimuTiltIdle")
-
-	if velocity.x == 0:
-		state_machine.travel("ReimuIdle")
-
+	
 	position += velocity * speed
-	position.x = clamp(position.x, game_field[2], game_field[0])
-	position.y = clamp(position.y, game_field[3], game_field[1])
+
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
+	
+	position.x = clamp(position.x, game_field[2] - 16, game_field[0] + 16)
+	position.y = clamp(position.y, game_field[3] - 16, game_field[1] + 16)
 
-func _on_Player_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+func _on_Player_body_shape_entered(_body_rid, _body, _body_shape_index, _local_shape_index):
 	print("dead")
 	pass # Replace with function body.
 
-func _on_Player_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
+func _on_Player_body_shape_exited(_body_rid, _body, _body_shape_index, _local_shape_index):
 	pass # Replace with function body.

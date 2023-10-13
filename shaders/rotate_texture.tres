@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+vec2 rotateUVmatrinx(vec2 uv, vec2 pivot, float rotation)
+{
+    mat2 rotation_matrix=mat2(  vec2(sin(rotation),-cos(rotation)),
+                                vec2(cos(rotation),sin(rotation))
+                                );
+    uv -= pivot;
+    uv= uv*rotation_matrix;
+    uv += pivot;
+    return uv;
+}
+
+void fragment() {
+    COLOR = texture(TEXTURE, rotateUVmatrinx(UV, vec2(0.5), 3.14/2.0));
+}"
+
+[resource]
+shader = SubResource( 1 )

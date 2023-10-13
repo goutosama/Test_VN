@@ -1,4 +1,5 @@
 VAR name = ""
+VAR ill = "None"
 VAR charChiaki = "Chiaki"
 VAR charNanami = "Nanami"
 
@@ -21,7 +22,8 @@ Now, you, Player. Does she deserve the punishment? Or we could leave her as she 
 
 === apologise ===
 ~ name = "Player"
-She could be punished, but that's not nessecary. What really must be done is apologise: she snuck into my game without asking my permission.
+~ ill = "Images/bg30a0.jpg"
+She could be punished, but that's not nessecary. What really must be done is apologise: she snuck into my game without asking my permission. {ill}
 
 ~ name = "{charChiaki}"
 Oh my! How things have turned! Okay, if you really need my apologies, here I am: 

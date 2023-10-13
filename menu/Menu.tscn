@@ -3,7 +3,7 @@
 [ext_resource path="res://menu/Menu.gd" type="Script" id=1]
 [ext_resource path="res://Images/icon.png" type="Texture" id=2]
 [ext_resource path="res://fonts/xolonium/Xolonium.tres" type="DynamicFont" id=3]
-[ext_resource path="res://menu/OptionsContainer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://menu/Card.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=4]
 resource_name = "HideInfo"
@@ -154,7 +154,16 @@ margin_top = 93.0
 margin_right = 982.0
 margin_bottom = 780.0
 
-[node name="OptionsContainer" parent="MarginContainer/PanelContainer" instance=ExtResource( 4 )]
+[node name="ItemList" type="ItemList" parent="MarginContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 817.0
+margin_bottom = 7.0
+
+[node name="Card" type="TextureRect" parent="MarginContainer/PanelContainer/ItemList"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/HideInfo = SubResource( 4 )

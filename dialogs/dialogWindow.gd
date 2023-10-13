@@ -16,23 +16,30 @@ var InkPlayer = load("res://addons/inkgd/ink_player.gd")
 # onready var _ink_player = $InkPlayer
 onready var _ink_player = $InkPlayer
 
+export var InkFile : Resource
+
 # ############################################################################ #
 # Lifecycle
 # ############################################################################ #
 onready var charNameBox = get_node("DialogueWindow/textWindow/M/HBox/VBox/M2/Pc")
 onready var textBox = get_node("DialogueWindow/textWindow/M/HBox/VBox/M/Pc/RichTextLabel")
 onready var choiceWindow = get_node("ChoiceWindow")
+onready var Illustration = get_node("Illustration")
 
 export (int) var maxTextLogLine = 8
+export (String) var StartingKnot = "None"
 
 onready var textArray = []
 onready var choices = []
+onready var illustrate = "None"
 
 class TextLine:
 	var name
 	var text
 
 func _ready():	
+	Illustration.visible = false
+	_ink_player.ink_file = InkFile
 	_ink_player.connect("loaded", self, "_story_loaded")
 
 	# Creates the story. 'loaded' will be emitted once Ink is ready
@@ -47,7 +54,9 @@ func _ready():
 func _story_loaded(successfully: bool):
 	if !successfully:
 		return
-	# _bind_externals()
+	if StartingKnot != "None":
+		_ink_player.choose_path(StartingKnot)
+	_continue_story(false)
 
 
 
@@ -60,6 +69,7 @@ func _continue_story(isChoice: bool):
 		var newLine = TextLine.new()
 		newLine.text = _ink_player.continue_story()
 		newLine.name = _ink_player.get_variable("name")
+		illustrate = _ink_player.get_variable("ill")
 		textBox.text = newLine.text
 		charNameBox.get_node("Center/Label").text = newLine.name
 		charNameBox.hideEmpty()
@@ -78,6 +88,14 @@ func _continue_story(isChoice: bool):
 		if textArray.size() > maxTextLogLine:
 			textArray.pop_front()
 		$PopupPanel/TextLog.on_log_update(textArray)
+		print(illustrate)
+		if illustrate == null:
+			illustrate = "None"
+		if illustrate != "None" || illustrate != "":
+			Illustration.visible = true
+			Illustration.texture = load("res://" + illustrate)
+		else:
+			Illustration.visible = false
 		return
 		
 		# This text is a line of text from the ink story.
