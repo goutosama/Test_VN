@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://mainMenu/mainLobbyArt.png" type="Texture" id=1]
-[ext_resource path="res://Images/icon.png" type="Texture" id=2]
+[ext_resource path="res://mainMenu/logo.png" type="Texture" id=2]
 [ext_resource path="res://fonts/Fifaks.tres" type="DynamicFont" id=3]
 [ext_resource path="res://mainMenu/mainMenu.gd" type="Script" id=4]
 [ext_resource path="res://fonts/Fifaks10Dev1.ttf" type="DynamicFontData" id=5]
@@ -21,7 +21,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1200, 0 ), Vector2( 463, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("MarginContainer/VBoxContainer/Label2:rect_position")
+tracks/1/path = NodePath("MarginContainer/VBoxContainer/Name of the game:rect_position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -69,8 +69,42 @@ tracks/4/keys = {
 "values": [ Vector2( 1200, 142 ), Vector2( 0, 142 ) ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "Spinning"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer2/TextureRect2:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Spinning"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer2/TextureRect2:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
 [sub_resource type="DynamicFont" id=2]
-size = 100
+size = 82
 font_data = ExtResource( 5 )
 
 [node name="MainMenu" type="Control"]
@@ -84,8 +118,29 @@ margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_bottom = 1.0
+margin_left = -400.0
+margin_top = 3.0
+margin_right = 401.0
+margin_bottom = 3.0
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer2"]
+margin_right = 801.0
+margin_bottom = 768.0
+rect_pivot_offset = Vector2( 400, 384 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="AnimationPlayerMenu" type="AnimationPlayer" parent="."]
 anims/InitMenu = SubResource( 1 )
+anims/Spinning = SubResource( 3 )
+
+[node name="AnimationPlayerLogo" type="AnimationPlayer" parent="."]
+anims/Spinning = SubResource( 4 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
@@ -107,25 +162,17 @@ size_flags_vertical = 3
 custom_constants/separation = 89
 alignment = 2
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Name of the game" type="Label" parent="MarginContainer/VBoxContainer"]
 margin_right = 578.0
-margin_bottom = 100.0
+margin_bottom = 82.0
 custom_fonts/font = SubResource( 2 )
-text = "Game XD"
+text = "Project Houtou"
 align = 1
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
-visible = false
-margin_top = 189.0
-margin_right = 578.0
-margin_bottom = 253.0
-texture = ExtResource( 2 )
-stretch_mode = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 189.0
+margin_top = 171.0
 margin_right = 578.0
-margin_bottom = 371.0
+margin_bottom = 353.0
 custom_constants/margin_left = 240
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
@@ -155,9 +202,9 @@ custom_fonts/font = ExtResource( 3 )
 text = "Quit Game"
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_top = 610.0
+margin_top = 601.0
 margin_right = 578.0
-margin_bottom = 644.0
+margin_bottom = 635.0
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 3 )
 text = "Made by Dead Game XD, 2023"

@@ -20,3 +20,8 @@ func _process(delta):
 		else:
 			$MenuPopup/Menu/VerticalSlider/CanvasLayer.visible = false
 			$MenuPopup.visible = false
+	if Input.is_action_just_pressed("Fire"):
+		var dialogueWindow = preload("res://dialogs/dialogWindow.tscn").instance()
+		dialogueWindow.InkFile = load("res://ink_scripts/items.ink.json")
+		dialogueWindow.StartingKnot = "wardrobe"
+		add_child(dialogueWindow)

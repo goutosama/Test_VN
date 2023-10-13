@@ -1,7 +1,8 @@
 extends Control
 
 func _ready():
-	$AnimationPlayer.play("InitMenu")
+	$AnimationPlayerLogo.play("Spinning")
+	$AnimationPlayerMenu.play("InitMenu")
 	pass
 
 

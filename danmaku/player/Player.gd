@@ -50,13 +50,14 @@ func _on_Player_body_shape_exited(_body_rid, _body, _body_shape_index, _local_sh
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "CRT Off":
+		Parent.get_node("Enemy").visible = false
 		Parent.get_node("TextureRect").visible = false
 		Parent.get_node("Cards UI").visible = false
 		Parent.get_node("frame").visible = false
 		Parent.get_node("Battle UI").visible = false
 		Parent.get_node("Gun").visible = false
 		Parent.get_node("Player").visible = false
-		Parent.get_node("Bullet Node").visible = false
+		Parent.get_node("Bullets").visible = false
 		Parent.get_node("Game Over screen").visible = true
 		CRTAnim.play("CRT On")
 

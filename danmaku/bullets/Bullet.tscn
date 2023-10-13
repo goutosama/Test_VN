@@ -11,5 +11,5 @@ Scale = 2.0
 AnimSlowness = 8
 
 [node name="Curve of Bullets" type="Path2D" parent="."]
-position = Vector2( -91, -55 )
+position = Vector2( -361, -58 )
 curve = ExtResource( 1 )

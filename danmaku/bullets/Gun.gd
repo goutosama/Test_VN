@@ -1,6 +1,6 @@
 extends Node2D
 
-const bullet_image = preload("res://danmaku/bullets/BulletSprite.tres")
+export(Resource) var bullet_image = preload("res://danmaku/bullets/BulletSprite.tres")
 const bullet_propsRes: Resource = preload("res://danmaku/bullets/BulletPropResourse.tres")
 
 

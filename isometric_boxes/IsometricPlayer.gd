@@ -40,6 +40,7 @@ func _physics_process(delta):
 
 var firstEnter = false
 func _on_Interact_body_entered(body):
+	print(body)
 	if firstEnter:
 		Interact.visible = true
 	else: 
