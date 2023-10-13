@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://shaders/crt_material.tres" type="Material" id=1]
 [ext_resource path="res://danmaku/ui/DanmakuUI.tscn" type="PackedScene" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://danmaku/world/danmaku_battlefield/frame_0_delay-0.05s.png" type="Texture" id=16]
 [ext_resource path="res://danmaku/world/danmaku_battlefield/frame_2_delay-0.05s.png" type="Texture" id=17]
 [ext_resource path="res://danmaku/player/Gun.tscn" type="PackedScene" id=18]
+[ext_resource path="res://danmaku/gameOver.tscn" type="PackedScene" id=19]
 
 [sub_resource type="AnimatedTexture" id=7]
 flags = 4
@@ -232,7 +233,7 @@ tracks/2/keys = {
 resource_name = "Новая анимация"
 length = 120.0
 tracks/0/type = "method"
-tracks/0/path = NodePath("LevelPlayer")
+tracks/0/path = NodePath("../LevelPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -261,7 +262,6 @@ stretch_mode = 2
 
 [node name="CRT Effect" type="CanvasLayer" parent="."]
 layer = 20
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CRT Effect"]
 material = ExtResource( 1 )
@@ -282,7 +282,6 @@ color = Color( 1, 1, 1, 0 )
 
 [node name="TV Black background" type="CanvasLayer" parent="."]
 layer = -2
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="TV Black background"]
 margin_right = 1024.0
@@ -370,5 +369,11 @@ visible = false
 position = Vector2( -61.496, 26 )
 curve = SubResource( 8 )
 
+[node name="Game Over screen" parent="." instance=ExtResource( 19 )]
+visible = false
+margin_left = 180.0
+margin_top = 238.0
+
+[connection signal="animation_finished" from="CRT Effect/AnimationPlayer" to="Player" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_shape_entered" from="Player" to="Player" method="_on_Player_body_shape_entered"]
 [connection signal="body_shape_exited" from="Player" to="Player" method="_on_Player_body_shape_exited"]

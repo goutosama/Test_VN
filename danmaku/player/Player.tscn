@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://danmaku/player/player.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://danmaku/player/Player.gd" type="Script" id=5]
@@ -45,6 +45,34 @@ transitions = [ "ReimuTilt", "ReimuTiltIdle", SubResource( 7 ), "ReimuIdle", "Re
 start_node = "ReimuIdle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
+
+[sub_resource type="Animation" id=18]
+resource_name = "Die"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.796078, 0, 0, 1 ) ]
+}
 
 [sub_resource type="Animation" id=13]
 resource_name = "ReimuIdle"
@@ -161,6 +189,7 @@ tracks/1/keys = {
 }
 
 [node name="Player" type="Area2D"]
+modulate = Color( 0.796078, 0, 0, 1 )
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -180,6 +209,7 @@ active = true
 parameters/playback = SubResource( 12 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Die = SubResource( 18 )
 anims/ReimuIdle = SubResource( 13 )
 anims/ReimuTilt = SubResource( 14 )
 anims/ReimuTiltIdle = SubResource( 15 )

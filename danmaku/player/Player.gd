@@ -5,7 +5,11 @@ export var speed = 7 # How fast the player will move (pixels/sec).
 export var game_field = [800,500, 180, 180] # Size of the game window.
 
 onready var state_machine = $AnimationTree.get("parameters/playback")
+onready var Parent = get_parent()
+onready var CRTAnim = Parent.get_node("CRT Effect/AnimationPlayer")
 
+
+var dead : bool = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	#var current_state = state_machine.get_current_node()
@@ -27,13 +31,32 @@ func _process(_delta):
 
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
-	
-	position.x = clamp(position.x, game_field[2] - 16, game_field[0] + 16)
-	position.y = clamp(position.y, game_field[3] - 16, game_field[1] + 16)
+	if !dead:
+		position.x = clamp(position.x, game_field[2] - 16, game_field[0] + 16)
+		position.y = clamp(position.y, game_field[3] - 16, game_field[1] + 16)
 
 func _on_Player_body_shape_entered(_body_rid, _body, _body_shape_index, _local_shape_index):
+	if !dead:
+		$AnimationPlayer.play("Die")
+		CRTAnim.play("CRT Off")
+		dead = true
+	
 	print("dead")
 	pass # Replace with function body.
 
 func _on_Player_body_shape_exited(_body_rid, _body, _body_shape_index, _local_shape_index):
 	pass # Replace with function body.
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "CRT Off":
+		Parent.get_node("TextureRect").visible = false
+		Parent.get_node("Cards UI").visible = false
+		Parent.get_node("frame").visible = false
+		Parent.get_node("Battle UI").visible = false
+		Parent.get_node("Gun").visible = false
+		Parent.get_node("Player").visible = false
+		Parent.get_node("Bullet Node").visible = false
+		Parent.get_node("Game Over screen").visible = true
+		CRTAnim.play("CRT On")
+

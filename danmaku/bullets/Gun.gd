@@ -41,7 +41,6 @@ func _ready():
 	shape = Physics2DServer.circle_shape_create()
 	# Set the collision shape's radius for each bullet in pixels.
 	Physics2DServer.shape_set_data(shape, 8 * Scale)
-	var transform2d = Transform2D()
 
 func _process(_delta):
 	# Order the CanvasItem to update every frame.
@@ -101,7 +100,7 @@ func _draw():
 	var offset = -bullet_image.get_frame("default", 0).get_size() * 0.5
 	for bullet in bullets:
 		# we need to compensate scaling by reducing position vector with itself (for whatever reason)
-		draw_set_transform(-bullet.position - offset, 0.0, Vector2(Scale, Scale))
+		#draw_set_transform(-bullet.position - offset, 0.0, Vector2(Scale, Scale))
 		draw_texture(bullet_image.get_frame("default", bullet.currFrame/AnimSlowness), bullet.position + offset)
 
 # Perform cleanup operations (required to exit without error messages in the console).
