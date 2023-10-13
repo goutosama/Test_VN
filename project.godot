@@ -945,6 +945,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Test_VN"
+run/main_scene="res://mainMenu/mainMenu.tscn"
 config/icon="res://Images/icon.png"
 
 [autoload]

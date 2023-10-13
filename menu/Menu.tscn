@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://menu/Menu.gd" type="Script" id=1]
-[ext_resource path="res://Images/icon.png" type="Texture" id=2]
+[ext_resource path="res://menu/button_questList.png" type="Texture" id=2]
 [ext_resource path="res://fonts/xolonium/Xolonium.tres" type="DynamicFont" id=3]
 [ext_resource path="res://menu/Card.gd" type="Script" id=4]
+[ext_resource path="res://menu/button_editCardDeck.png" type="Texture" id=5]
+[ext_resource path="res://menu/button_quitGame.png" type="Texture" id=6]
+[ext_resource path="res://menu/button_saveLoad.png" type="Texture" id=7]
+[ext_resource path="res://menu/button_continue.png" type="Texture" id=8]
 
 [sub_resource type="Animation" id=4]
 resource_name = "HideInfo"
@@ -109,35 +113,36 @@ margin_bottom = 761.0
 size_flags_horizontal = 5
 custom_constants/separation = 16
 
-[node name="TextureRect" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
+[node name="Continue" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
 margin_right = 64.0
 margin_bottom = 64.0
 size_flags_horizontal = 0
-texture = ExtResource( 2 )
+texture = ExtResource( 8 )
+stretch_mode = 7
 
-[node name="TextureRect2" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
+[node name="Quest List" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
 margin_top = 80.0
 margin_right = 66.0
 margin_bottom = 144.0
 texture = ExtResource( 2 )
 
-[node name="TextureRect3" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
+[node name="Edit Card Deck" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
 margin_top = 160.0
 margin_right = 66.0
 margin_bottom = 224.0
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 
-[node name="TextureRect4" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
+[node name="Save Load" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
 margin_top = 240.0
 margin_right = 66.0
 margin_bottom = 304.0
-texture = ExtResource( 2 )
+texture = ExtResource( 7 )
 
-[node name="TextureRect5" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
+[node name="Quit Game" type="TextureRect" parent="VerticalSlider/CanvasLayer/VBoxContainer"]
 margin_top = 320.0
 margin_right = 66.0
 margin_bottom = 384.0
-texture = ExtResource( 2 )
+texture = ExtResource( 6 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0

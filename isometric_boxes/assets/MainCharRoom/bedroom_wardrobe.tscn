@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://isometric_boxes/assets/MainCharRoom/bedroom_wardrobe.glb" type="PackedScene" id=1]
+
+[node name="bedroom_wardrobe" instance=ExtResource( 1 )]
