@@ -1,11 +1,10 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://shaders/crt_material.tres" type="Material" id=1]
 [ext_resource path="res://danmaku/ui/DanmakuUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://danmaku/world/danmaku_battlefield/frame_5_delay-0.05s.png" type="Texture" id=3]
 [ext_resource path="res://danmaku/bullets/Bullet.tscn" type="PackedScene" id=4]
 [ext_resource path="res://danmaku/player/Player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://danmaku/LevelPlayer.gd" type="Script" id=6]
 [ext_resource path="res://danmaku/CardsUI.gd" type="Script" id=7]
 [ext_resource path="res://danmaku/cards/horizontal/supportCard_healingKit.png" type="Texture" id=8]
 [ext_resource path="res://danmaku/cards/horizontal/defenseCard_shield.png" type="Texture" id=9]
@@ -23,6 +22,7 @@
 [ext_resource path="res://danmaku/player/playerBullet.tres" type="SpriteFrames" id=21]
 [ext_resource path="res://danmaku/enemies/djAlex/enemy_leha.png" type="Texture" id=22]
 [ext_resource path="res://danmaku/enemies/djAlex/enemyLehaBullet.tres" type="SpriteFrames" id=23]
+[ext_resource path="res://danmaku/DanmakuScreen.gd" type="Script" id=24]
 
 [sub_resource type="AnimatedTexture" id=7]
 flags = 4
@@ -244,21 +244,6 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 554, 754, 0, 0, 0, 0, 502, 724, 0, 0, 0, 0, 487, 711, 0, 0, 0, 0, 464, 683, 0, 0, 0, 0, 447, 663, 0, 0, 0, 0, 435, 639, 0, 0, 0, 0, 429, 606, 0, 0, 0, 0, 421, 572, 0, 0, 0, 0, 421, 548, 0, 0, 0, 0, 421, 520, 0, 0, 0, 0, 419, 482, 0, 0, 0, 0, 418, 458, 0, 0, 0, 0, 419, 431, 0, 0, 0, 0, 419, 409, 0, 0, 0, 0, 421, 375, 0, 0, 0, 0, 423, 342, 0, 0, 0, 0, 433, 297, 0, 0, 0, 0, 447, 258, 0, 0, 0, 0, 467, 233, 0, 0, 0, 0, 489, 207, 0, 0, 0, 0, 563, 149 )
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Новая анимация"
-length = 120.0
-tracks/0/type = "method"
-tracks/0/path = NodePath("../LevelPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
-}
-
 [sub_resource type="Curve2D" id=8]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 181, 40, 0, -92.0419, 0, 92.0419, 91.504, 216, -13.4695, -4.48985, 13.4695, 4.48985, 182, 401 )
@@ -267,6 +252,7 @@ _data = {
 [node name="Danmaku Gameplay Node" type="Node2D"]
 self_modulate = Color( 0.203922, 0.0745098, 0.0745098, 1 )
 position = Vector2( -0.504, 0 )
+script = ExtResource( 24 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1026.0
@@ -313,7 +299,7 @@ texture = ExtResource( 22 )
 [node name="Bullet Node" parent="Bullets" instance=ExtResource( 4 )]
 bullet_image = ExtResource( 23 )
 path2dPath = NodePath("Path2D")
-game_field = [ 760, 716, 0, 0 ]
+isHitboxVisible = true
 ArrayOfPoints = [ Vector3( 0, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 0, 0, 0 ) ]
 
 [node name="Path2D" type="Path2D" parent="Bullets/Bullet Node"]
@@ -322,6 +308,7 @@ curve = SubResource( 9 )
 
 [node name="Bullet Node2" parent="Bullets" instance=ExtResource( 4 )]
 path2dPath = NodePath("Curve of Bullets2")
+isHitboxVisible = true
 ArrayOfPoints = [ Vector3( 0, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 0, 0, 0 ) ]
 
 [node name="Curve of Bullets2" type="Path2D" parent="Bullets/Bullet Node2"]
@@ -330,6 +317,7 @@ curve = ExtResource( 20 )
 
 [node name="Bullet Node3" parent="Bullets" instance=ExtResource( 4 )]
 path2dPath = NodePath("Curve of Bullets2")
+isHitboxVisible = true
 ArrayOfPoints = [ Vector3( 0, 0, 0 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 2, 0, 3.14 ), Vector3( 0, 0, 0 ) ]
 
 [node name="Curve of Bullets2" type="Path2D" parent="Bullets/Bullet Node3"]
@@ -340,12 +328,13 @@ curve = SubResource( 10 )
 position = Vector2( 398.504, 630 )
 collision_layer = 9
 collision_mask = 17
-game_field = [ 730, 678, 58, 50 ]
 
 [node name="Gun" parent="." instance=ExtResource( 18 )]
 position = Vector2( -2.83122e-05, 0 )
 bullet_image = ExtResource( 21 )
 Scale = 4.0
+
+[node name="LevelPlayer" type="AnimationPlayer" parent="."]
 
 [node name="frame" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -364,10 +353,6 @@ margin_left = 553.504
 margin_top = 717.0
 margin_right = 553.504
 margin_bottom = 717.0
-
-[node name="LevelPlayer" type="AnimationPlayer" parent="."]
-"anims/Новая анимация" = SubResource( 6 )
-script = ExtResource( 6 )
 
 [node name="Cards UI" type="MarginContainer" parent="."]
 margin_left = 854.504

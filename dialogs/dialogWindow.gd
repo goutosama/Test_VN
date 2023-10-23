@@ -29,6 +29,8 @@ onready var Illustration = get_node("Illustration")
 export (int) var maxTextLogLine = 8
 export (String) var StartingKnot = "None"
 
+export (bool) var useTextLog = true
+
 onready var textArray = []
 onready var choices = []
 onready var illustrate = "None"
@@ -38,7 +40,7 @@ class TextLine:
 	var text
 
 func _ready():	
-	Illustration.visible = false
+#	Illustration.visible = false
 	_ink_player.ink_file = InkFile
 	_ink_player.connect("loaded", self, "_story_loaded")
 
@@ -71,7 +73,7 @@ func _continue_story(isChoice: bool):
 		newLine.name = _ink_player.get_variable("name")
 		illustrate = _ink_player.get_variable("ill")
 		textBox.text = newLine.text
-		charNameBox.get_node("Center/Label").text = newLine.name
+		charNameBox.get_node("Center/Label").text    = newLine.name  
 		charNameBox.hideEmpty()
 		if isChoice:
 			var choose = newLine.text
@@ -89,13 +91,13 @@ func _continue_story(isChoice: bool):
 			textArray.pop_front()
 		$PopupPanel/TextLog.on_log_update(textArray)
 		print(illustrate)
-		if illustrate == null:
-			illustrate = "None"
-		if illustrate != "None" || illustrate != "":
-			Illustration.visible = true
-			Illustration.texture = load("res://" + illustrate)
-		else:
-			Illustration.visible = false
+#		if illustrate == null:
+#			illustrate = "None"
+#		if illustrate != "None" || illustrate != "":
+#			Illustration.visible = true
+#			Illustration.texture = load("res://" + illustrate)
+#		else:
+#			Illustration.visible = false
 		return
 		
 		# This text is a line of text from the ink story.
@@ -103,8 +105,14 @@ func _continue_story(isChoice: bool):
 	if _ink_player.has_choices:
 		choiceWindow.runGetUpAnimation()
 		choiceWindow.button1.text = _ink_player.current_choices[0]
-		choiceWindow.button2.text = _ink_player.current_choices[1]
-		choiceWindow.button3.text = _ink_player.current_choices[2]
+		if _ink_player.current_choices.size() >= 2:
+			choiceWindow.button2.text = _ink_player.current_choices[1]
+		else:
+			choiceWindow.button2.visible = false
+		if _ink_player.current_choices.size() >= 3:
+			choiceWindow.button3.text = _ink_player.current_choices[2]
+		else:
+			choiceWindow.button3.visible = false
 		
 		choices = _ink_player.current_choices
 	else: 
@@ -129,7 +137,7 @@ func _select_choice(index):
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_select") && $PopupPanel.visible == false:
 		_continue_story(false)
-	if Input.is_action_just_pressed("ui_down"):
+	if Input.is_action_just_pressed("ui_down") && useTextLog:
 		if $PopupPanel.visible == false:
 			$PopupPanel.popup()
 		else:

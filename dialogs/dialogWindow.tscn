@@ -10,8 +10,8 @@
 [ext_resource path="res://dialogs/dialogChoiceWindow.gd" type="Script" id=8]
 [ext_resource path="res://dialogs/Pc.gd" type="Script" id=9]
 [ext_resource path="res://dialogs/TextLog.tscn" type="PackedScene" id=10]
-[ext_resource path="res://ink_scripts/test_file.ink.json" type="Resource" id=11]
-[ext_resource path="res://Images/bg30a0.jpg" type="Texture" id=12]
+[ext_resource path="res://ink_scripts/main_script.ink.json" type="Resource" id=11]
+[ext_resource path="res://Images/backgrounds/vnBackground_village.png" type="Texture" id=12]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 15.0
@@ -44,8 +44,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -768.0
 texture = ExtResource( 12 )
-expand = true
-stretch_mode = 7
+stretch_mode = 1
 
 [node name="InkPlayer" type="Node" parent="."]
 script = ExtResource( 6 )
@@ -135,6 +134,7 @@ text = "His full dialogue with lasts tooo long oh fod when this will end i cant 
 fit_content_height = true
 
 [node name="CharacterSprite" type="TextureRect" parent="."]
+visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0

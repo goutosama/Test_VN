@@ -47,7 +47,7 @@ func _process(_delta):
 	update()
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("Fire"):
 		var transform2d = Transform2D()
 		var bullet = Bullet.new()
@@ -111,5 +111,5 @@ func _exit_tree():
 	Physics2DServer.free_rid(shape)
 	bullets.clear()
 
-func _on_Player_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+func _on_Player_body_shape_entered(_body_rid, _body, _body_shape_index, _local_shape_index):
 	pass # Replace with function body.

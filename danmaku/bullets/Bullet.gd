@@ -11,7 +11,9 @@ onready var path := get_node(path2dPath) as Path2D
 # be determined by its previous and next point normal vector, 
 # so first and last points will not create bullets
 
-export var game_field = [800,500, 180, 180] # Size of the game window.
+export (Array) var game_field = [716,760, 0, 0] # Size of the game window.
+
+export (bool) var isHitboxVisible = false
 
 export(Array, Vector3) var ArrayOfPoints 
 # 2d array, each array inside are settings for points angle(radians), delay and speed
@@ -52,7 +54,7 @@ func _ready():
 
 	shape = Physics2DServer.circle_shape_create()
 	# Set the collision shape's radius for each bullet in pixels.
-	Physics2DServer.shape_set_data(shape, 8 * Scale)
+	Physics2DServer.shape_set_data(shape, 2 * Scale)
 	var transform2d = Transform2D()
 
 	for _i in range(1, path.curve.get_point_count() - 1):
@@ -128,6 +130,8 @@ func _draw():
 			# we need to compensate scaling by reducing position vector with itself (for whatever reason)
 			draw_set_transform(-bullet.position - offset, 0.0, Vector2(Scale, Scale))
 			draw_texture(bullet_image.get_frame("default", bullet.currFrame/AnimSlowness), bullet.position + offset)
+			if isHitboxVisible:
+				draw_circle(bullet.position, 2 * Scale, Color.aqua)
 
 # Perform cleanup operations (required to exit without error messages in the console).
 func _exit_tree():
@@ -137,5 +141,5 @@ func _exit_tree():
 	Physics2DServer.free_rid(shape)
 	bullets.clear()
 
-func _on_Player_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+func _on_Player_body_shape_entered(_body_rid, _body, _body_shape_index, _local_shape_index):
 	pass # Replace with function body.

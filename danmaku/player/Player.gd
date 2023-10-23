@@ -2,7 +2,7 @@ extends Area2D
 
 
 export var speed = 7 # How fast the player will move (pixels/sec).
-export var game_field = [800,500, 180, 180] # Size of the game window.
+export (Array) var game_field = [730,678, 58, 50] # Size of the game window.
 
 onready var state_machine = $AnimationTree.get("parameters/playback")
 onready var Parent = get_parent()

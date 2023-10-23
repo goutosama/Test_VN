@@ -1,0 +1,1 @@
+{"inkVersion":20,"root":[["^...","\n",{"->":"wardrobe"},["done",{"#f":5,"#n":"g-0"}],null],"done",{"wardrobe":["^В этом шкафу обычно хранят одежду.","\n","^Однако в нём можно и спрятаться.","\n","end",{"#f":1}],"global decl":["ev","str","^","/str",{"VAR=":"name"},"/ev","end",null],"#f":1}],"listDefs":{}}

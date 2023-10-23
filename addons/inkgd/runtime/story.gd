@@ -69,7 +69,6 @@ var current_text setget , get_current_text
 func get_current_text():
 	if async_we_cant("call currentText since it's a work in progress"):
 		return null
-
 	return self.state.current_text
 
 # Array?
