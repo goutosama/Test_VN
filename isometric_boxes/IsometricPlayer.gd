@@ -2,10 +2,14 @@ extends KinematicBody
 
 export var speed = 1 # How fast the player will move (pixels/sec).
 
+onready var spriteScale = 8
 
 onready var camera = get_parent().get_parent().get_node("Camera Pivot")
-onready var Menu = get_parent().get_parent().get_node("UI/MenuPopup")
+onready var Menu = get_parent().get_parent().get_node("UI/MenuPopup" )
 onready var Interact = get_parent().get_parent().get_node("UI/InteractPopup")
+
+func _ready():
+	$AnimatedSprite3D.scale = Vector3.ONE * spriteScale
 
 func _physics_process(delta):
 	if !Menu.visible:
@@ -50,5 +54,3 @@ func _on_Interact_body_entered(body):
 func _on_Interact_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
 	Interact.visible = false
 	pass # Replace with function body.
-
-

@@ -11,3 +11,7 @@ func _ready():
 		bullet.game_field = game_field_bullets
 	$Player.game_field = game_field_player
 	pass
+
+func bulletNodeInit():
+	for bullet in $Bullets.get_children():
+		bullet.game_field = game_field_bullets

@@ -1,21 +1,12 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://isometric_boxes/assets/MainCharRoom/bedroom_floorWalls.tscn" type="PackedScene" id=1]
-[ext_resource path="res://isometric_boxes/IsometricPlayer.gd" type="Script" id=2]
+[ext_resource path="res://isometric_boxes/Player3D.tscn" type="PackedScene" id=2]
 [ext_resource path="res://isometric_boxes/IsometricCamera.gd" type="Script" id=3]
-[ext_resource path="res://isometric_boxes/assets/MainChar_images/mainCharFrames.tres" type="SpriteFrames" id=4]
-[ext_resource path="res://isometric_boxes/InteractPopup.tscn" type="PackedScene" id=5]
 [ext_resource path="res://isometric_boxes/assets/MainCharRoom/bedroom_door.tscn" type="PackedScene" id=6]
 [ext_resource path="res://isometric_boxes/assets/MainCharRoom/bedroom_wardrobe.tscn" type="PackedScene" id=7]
 [ext_resource path="res://isometric_boxes/assets/MainCharRoom/bedroom_bed.tscn" type="PackedScene" id=8]
-[ext_resource path="res://isometric_boxes/Menu3D.gd" type="Script" id=9]
-[ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=10]
 [ext_resource path="res://default_env.tres" type="Environment" id=11]
-
-[sub_resource type="CubeMesh" id=7]
-
-[sub_resource type="SpatialMaterial" id=8]
-albedo_color = Color( 0, 1, 0.0862745, 1 )
 
 [sub_resource type="BoxShape" id=34]
 extents = Vector3( 0.201549, 1.84635, 5.78952 )
@@ -32,30 +23,15 @@ extents = Vector3( 1.2, 1.2, 1.2 )
 [sub_resource type="BoxShape" id=38]
 extents = Vector3( 1.215, 1.211, 1.193 )
 
-[sub_resource type="BoxShape" id=33]
-extents = Vector3( 0.262, 0.2, 0.275 )
+[sub_resource type="CubeMesh" id=7]
 
-[sub_resource type="StyleBoxEmpty" id=37]
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0, 1, 0.0862745, 1 )
 
 [node name="Spatial" type="Spatial"]
 
-[node name="Camera Pivot" type="Spatial" parent="."]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 1, -1.04 )
-script = ExtResource( 3 )
-scenePath = NodePath("../Scene")
-roomPath = NodePath("../Scene/StaticBody/bedroom_floorWalls")
-mouseEnabled = false
-
-[node name="IsometricCamera" type="Camera" parent="Camera Pivot"]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 4, 6 )
-current = true
-far = 2080.8
-
-[node name="MeshInstance" type="MeshInstance" parent="Camera Pivot"]
-transform = Transform( 0.203, 0, 0, 0, 0.203, 0, 0, 0, 0.203, 0, 0, 0 )
-visible = false
-mesh = SubResource( 7 )
-material/0 = SubResource( 8 )
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 11 )
 
 [node name="Scene" type="Spatial" parent="."]
 
@@ -133,41 +109,22 @@ collision_layer = 2
 [node name="CollisionShapeInteract" type="CollisionShape" parent="Scene/Door/Interact"]
 shape = SubResource( 36 )
 
-[node name="Player" type="KinematicBody" parent="Scene"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.272513, 0.680909, 1.15924 )
-script = ExtResource( 2 )
+[node name="Player" parent="Scene" instance=ExtResource( 2 )]
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Scene/Player"]
-transform = Transform( 8, 0, 0, 0, 7.99999, 0.0131248, 0, -0.0131248, 7.99999, 0.11, 0.412794, 0 )
-billboard = 1
-frames = ExtResource( 4 )
-animation = "front"
-playing = true
+[node name="Camera Pivot" type="Spatial" parent="."]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 1, -1.04 )
+script = ExtResource( 3 )
+scenePath = NodePath("../Scene")
+roomPath = NodePath("../Scene/StaticBody/bedroom_floorWalls")
+mouseEnabled = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Scene/Player"]
-transform = Transform( 2.304, 0, 0, 0, 3.403, 0, 0, 0, 2.375, 0.079, 0, 0 )
-shape = SubResource( 33 )
+[node name="IsometricCamera" type="Camera" parent="Camera Pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 4, 6 )
+current = true
+far = 2080.8
 
-[node name="UI" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 9 )
-
-[node name="InteractPopup" parent="UI" instance=ExtResource( 5 )]
-
-[node name="MenuPopup" type="PopupPanel" parent="UI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = SubResource( 37 )
-
-[node name="Menu" parent="UI/MenuPopup" instance=ExtResource( 10 )]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 11 )
-
-[connection signal="body_entered" from="Scene/Bed/Interact" to="Scene/Player" method="_on_Interact_body_entered"]
-[connection signal="body_shape_exited" from="Scene/Bed/Interact" to="Scene/Player" method="_on_Interact_body_shape_exited"]
-[connection signal="body_entered" from="Scene/Wardrobe/Interact" to="Scene/Player" method="_on_Interact_body_entered"]
-[connection signal="body_shape_exited" from="Scene/Wardrobe/Interact" to="Scene/Player" method="_on_Interact_body_shape_exited"]
-[connection signal="body_entered" from="Scene/Door/Interact" to="Scene/Player" method="_on_Interact_body_entered"]
-[connection signal="body_shape_exited" from="Scene/Door/Interact" to="Scene/Player" method="_on_Interact_body_shape_exited"]
+[node name="MeshInstance" type="MeshInstance" parent="Camera Pivot"]
+transform = Transform( 0.203, 0, 0, 0, 0.203, 0, 0, 0, 0.203, 0, 0, 0 )
+visible = false
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
