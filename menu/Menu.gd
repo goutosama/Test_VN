@@ -22,6 +22,8 @@ onready var ItemsContainer = get_node("VerticalSlider/CanvasLayer/VBoxContainer"
 onready var Vslider = get_node("VerticalSlider")
 onready var InfoPanel = get_node("MarginContainer/PanelContainer")
 
+signal CurrItem(index)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	CursorLabel.text = Items[SelectedItem]
@@ -67,6 +69,7 @@ func _physics_process(delta):
 			$AnimationPlayer.play("HideInfo")
 			
 	if Input.is_action_just_pressed("ui_right"):
+		emit_signal("CurrItem", SelectedItem)
 		if !isCursorAnims && !isSelected:
 			isCursorAnims = true
 			isSelectAnim = true

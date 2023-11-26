@@ -6,6 +6,7 @@
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="InteractPopup" type="PopupPanel"]
+visible = true
 margin_left = 55.0
 margin_top = 595.0
 margin_right = 473.0
@@ -31,7 +32,7 @@ stretch_mode = 6
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 margin_left = 112.0
-margin_right = 280.0
+margin_right = 418.0
 margin_bottom = 106.0
 size_flags_horizontal = 3
 custom_constants/margin_top = 16
@@ -39,14 +40,14 @@ custom_constants/margin_bottom = 26
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/MarginContainer"]
 margin_top = 16.0
-margin_right = 168.0
+margin_right = 306.0
 margin_bottom = 80.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 8.0
-margin_right = 161.0
+margin_right = 299.0
 margin_bottom = 55.0
 custom_fonts/font = ExtResource( 2 )
 text = "Interact"

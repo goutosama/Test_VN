@@ -35,3 +35,6 @@ custom_styles/panel = SubResource( 1 )
 [node name="Menu" parent="UI/MenuPopup" instance=ExtResource( 4 )]
 
 [node name="InteractPopup" parent="UI" instance=ExtResource( 3 )]
+
+[connection signal="hideInteract" from="3D Viewport/Spatial" to="UI" method="_on_Spatial_hideInteract"]
+[connection signal="showInteract" from="3D Viewport/Spatial" to="UI" method="_on_Spatial_showInteract"]

@@ -1,13 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://menu/Menu.gd" type="Script" id=1]
 [ext_resource path="res://menu/button_questList.png" type="Texture" id=2]
 [ext_resource path="res://fonts/xolonium/Xolonium.tres" type="DynamicFont" id=3]
-[ext_resource path="res://menu/Card.gd" type="Script" id=4]
+[ext_resource path="res://menu/HandleMenuWindows.gd" type="Script" id=4]
 [ext_resource path="res://menu/button_editCardDeck.png" type="Texture" id=5]
 [ext_resource path="res://menu/button_quitGame.png" type="Texture" id=6]
 [ext_resource path="res://menu/button_saveLoad.png" type="Texture" id=7]
 [ext_resource path="res://menu/button_continue.png" type="Texture" id=8]
+[ext_resource path="res://isometric_boxes/Internal3DPrimitives/shell-texturing/ShellTexture.tscn" type="PackedScene" id=9]
+[ext_resource path="res://menu/Shell-city-scene.gd" type="Script" id=10]
+[ext_resource path="res://menu/CardsList.gd" type="Script" id=11]
 
 [sub_resource type="Animation" id=4]
 resource_name = "HideInfo"
@@ -35,6 +38,23 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("MarginContainer/PanelContainer/CardsList")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "hideSlideBar"
+}, {
+"args": [  ],
+"method": "showSlideBar"
+} ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -90,6 +110,50 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("MarginContainer/PanelContainer/CardsList")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "hideSlideBar"
+}, {
+"args": [  ],
+"method": "showSlideBar"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Anim"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShellTexture:shell_height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 4.92458 ),
+"update": 0,
+"values": [ 0.0, 1.298 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -2.09619, 1.17779, 3.31786 ), Vector3( 0, 1.17779, 0.949018 ) ]
 }
 
 [node name="Menu" type="Control"]
@@ -158,17 +222,16 @@ margin_left = 175.0
 margin_top = 93.0
 margin_right = 982.0
 margin_bottom = 780.0
+script = ExtResource( 4 )
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/PanelContainer"]
+[node name="CardsList" type="ItemList" parent="MarginContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 817.0
 margin_bottom = 7.0
-
-[node name="Card" type="TextureRect" parent="MarginContainer/PanelContainer/ItemList"]
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 4 )
+icon_mode = 0
+icon_scale = 5.0
+script = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/HideInfo = SubResource( 4 )
@@ -195,4 +258,32 @@ margin_bottom = 55.0
 custom_fonts/font = ExtResource( 3 )
 text = "дед пункт меню хдд"
 
+[node name="3D Shells background" type="CanvasLayer" parent="."]
+layer = -5
+
+[node name="ViewportContainer" type="ViewportContainer" parent="3D Shells background"]
+margin_right = 1024.0
+margin_bottom = 768.0
+
+[node name="Viewport" type="Viewport" parent="3D Shells background/ViewportContainer"]
+size = Vector2( 1024, 768 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Spatial" type="Spatial" parent="3D Shells background/ViewportContainer/Viewport"]
+script = ExtResource( 10 )
+
+[node name="Camera" type="Camera" parent="3D Shells background/ViewportContainer/Viewport/Spatial"]
+transform = Transform( 1, 0, 0, 0, 0.540549, 0.841313, 0, -0.841313, 0.540549, -2.09619, 1.17779, 3.31786 )
+fov = 56.7
+
+[node name="ShellTexture" parent="3D Shells background/ViewportContainer/Viewport/Spatial" instance=ExtResource( 9 )]
+transform = Transform( 1.403, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.263204, -0.00909251 )
+shell_height = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="3D Shells background/ViewportContainer/Viewport/Spatial"]
+anims/Anim = SubResource( 5 )
+
+[connection signal="CurrItem" from="." to="MarginContainer/PanelContainer" method="_on_Item_Opened"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

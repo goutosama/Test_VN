@@ -27,3 +27,15 @@ func _process(delta):
 		dialogueWindow.StartingKnot = "wardrobe"
 		dialogueWindow.useTextLog = false
 		add_child(dialogueWindow)
+
+
+func _on_Spatial_hideInteract():
+	print("ui hook")
+	$InteractPopup.visible = false
+	pass # Replace with function body.
+
+
+func _on_Spatial_showInteract():
+	print("ui hook")
+	$InteractPopup.visible = true
+	pass # Replace with function body.

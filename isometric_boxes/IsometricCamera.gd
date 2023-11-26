@@ -8,8 +8,8 @@ onready var room := get_node(roomPath) as Spatial
 
 export (bool) var mouseEnabled = true
 export (float) var mouseSensitivity = 0.3
+export (bool) var isLocked = false
 
-onready var Menu = get_parent().get_node("UI/MenuPopup")
 
 onready var yaw : float = 0.0
 onready var rotateState : bool = false
@@ -25,7 +25,7 @@ func _ready():
 		room.get_node("Walls1").visible = true
 # this script no longer rotates the scene, it moves itself
 func _input(event):
-	if !Menu.visible:
+	if !isLocked:
 		if event is InputEventMouseMotion and mouseEnabled:
 			var mouseVec : Vector2 = event.get_relative()
 			
