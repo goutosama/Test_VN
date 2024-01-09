@@ -6,7 +6,6 @@
 [node name="Bullet Node" type="Node2D"]
 script = ExtResource( 2 )
 path2dPath = NodePath("Curve of Bullets")
-ArrayOfPoints = [ Vector3( 0, 0, 0 ), Vector3( 2, 2, 3.14 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 5, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 0, 0 ), Vector3( 2, 5, 0 ), Vector3( 0, 0, 0 ) ]
 Scale = 2.0
 AnimSlowness = 8
 

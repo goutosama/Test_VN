@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://isometric_boxes/Internal3DPrimitives/PolygonCity/miltiBoxCity.gd" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=5]
+params_diffuse_mode = 1
+params_specular_mode = 1
+albedo_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+metallic_specular = 0.0
+
+[sub_resource type="CubeMesh" id=1]
+material = SubResource( 5 )
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="MultiMesh" id=2]
+transform_format = 1
+instance_count = 11
+mesh = SubResource( 1 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+octaves = 9
+period = 0.1
+persistence = 0.181
+lacunarity = 0.44
+
+[sub_resource type="NoiseTexture" id=4]
+width = 36
+height = 26
+bump_strength = 0.0
+noise = SubResource( 3 )
+
+[node name="MultiMeshInstance" type="MultiMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.59391, -4.24197, 4.7776 )
+multimesh = SubResource( 2 )
+script = ExtResource( 1 )
+texture = SubResource( 4 )
+base_height = 0.458
+scale_height = 31.02

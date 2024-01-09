@@ -9,6 +9,21 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "BulletLine",
+"language": "GDScript",
+"path": "res://danmaku/bullets/BulletLine.gd"
+}, {
+"base": "Node2D",
+"class": "BulletNode",
+"language": "GDScript",
+"path": "res://danmaku/bullets/Bullet.gd"
+}, {
+"base": "Resource",
+"class": "BulletParameters",
+"language": "GDScript",
+"path": "res://danmaku/bullets/BulletsObject.gd"
+}, {
 "base": "Reference",
 "class": "InkBase",
 "language": "GDScript",
@@ -785,6 +800,9 @@ _global_script_classes=[ {
 "path": "res://addons/shaderV/tools/vec2Compose.gd"
 } ]
 _global_script_class_icons={
+"BulletLine": "",
+"BulletNode": "",
+"BulletParameters": "",
 "InkBase": "",
 "InkBoolValue": "",
 "InkCSharpValidator": "",
@@ -944,9 +962,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Test_VN"
+config/name="HouTou project"
 run/main_scene="res://mainMenu/mainMenu.tscn"
-config/icon="res://Images/icon.png"
+config/icon="res://mainMenu/logo.png"
 
 [autoload]
 

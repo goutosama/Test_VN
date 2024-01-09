@@ -2,6 +2,7 @@ extends Spatial
 
 onready var mesh = self.multimesh
 
+export (NoiseTexture) var noise
 export (float) var shell_height = 100.0
 
 func _process(delta):

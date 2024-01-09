@@ -7,7 +7,7 @@ export var game_field_player = [730,678, 58, 50]
 
 func _ready():
 	$LevelPlayer.set_script(LevelScript)
-	for bullet in $Bullets.get_children():
+	for bullet in $LevelPlayer/Bullets.get_children():
 		bullet.game_field = game_field_bullets
 	$Player.game_field = game_field_player
 	pass

@@ -89,7 +89,7 @@ func _physics_process(delta):
 			CursorLabel.text = Items[SelectedItem]
 
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_nimation_finished(anim_name):
 	if anim_name == "HideInfo":
 		isCursorAnims = true
 		isSelectAnim = true

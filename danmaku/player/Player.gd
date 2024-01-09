@@ -57,7 +57,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		Parent.get_node("Battle UI").visible = false
 		Parent.get_node("Gun").visible = false
 		Parent.get_node("Player").visible = false
-		Parent.get_node("Bullets").visible = false
+		Parent.get_node("LevelPlayer/Bullets").visible = false
 		Parent.get_node("Game Over screen").visible = true
 		CRTAnim.play("CRT On")
 

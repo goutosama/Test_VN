@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://isometric_boxes/Internal3DPrimitives/PolygonCity/DirectionalLight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://isometric_boxes/Internal3DPrimitives/PolygonCity/PolygonCity.gd" type="Script" id=2]
+[ext_resource path="res://isometric_boxes/Internal3DPrimitives/PolygonCity/MultiMeshInstance.tscn" type="PackedScene" id=3]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="MultiMeshInstance" parent="." instance=ExtResource( 3 )]
+
+[node name="DirectionalLight" parent="." instance=ExtResource( 1 )]

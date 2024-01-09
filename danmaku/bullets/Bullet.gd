@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name BulletNode
 export(Resource) var bullet_image = preload("res://danmaku/bullets/BulletSprite.tres")
 const bullet_propsRes: Resource = preload("res://danmaku/bullets/BulletPropResourse.tres")
 
@@ -15,7 +15,7 @@ export (Array) var game_field = [716,760, 0, 0] # Size of the game window.
 
 export (bool) var isHitboxVisible = false
 
-export(Array, Vector3) var ArrayOfPoints 
+export(Array, Resource) var BulletParams
 # 2d array, each array inside are settings for points angle(radians), delay and speed
 # first and last element of array will be ignored
 
@@ -61,13 +61,13 @@ func _ready():
 		var bullet = Bullet.new()
 
 		# Give each bullet its own speed.
-		bullet.speed = ArrayOfPoints[_i].x * 10
+		bullet.speed = BulletParams[_i].speed * 10
 		var between = path.curve.get_point_position(_i - 1) - path.curve.get_point_position(_i + 1)
 		print(Vector2(between.y, -between.x).normalized())
-		var direction = Vector2(cos(ArrayOfPoints[_i].z), sin(ArrayOfPoints[_i].z))
+		var direction = Vector2(cos(BulletParams[_i].directionRadians), sin(BulletParams[_i].directionRadians))
 		bullet.direction = Vector2(between.y * direction.x - (-between.x) * direction.y, between.y * direction.y + (-between.x) * direction.x).normalized()
 
-		bullet.delay = ArrayOfPoints[_i].y
+		bullet.delay = BulletParams[_i].delay
 		bullet.body = Physics2DServer.body_create()
 		Physics2DServer.body_set_space(bullet.body, get_world_2d().get_space())
 		Physics2DServer.body_add_shape(bullet.body, shape)
