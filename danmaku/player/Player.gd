@@ -5,7 +5,7 @@ export var speed = 7 # How fast the player will move (pixels/sec).
 export (Array) var game_field = [730,678, 58, 50] # Size of the game window.
 
 onready var state_machine = $AnimationTree.get("parameters/playback")
-onready var Parent = get_parent()
+onready var Parent = get_parent().get_parent()
 onready var CRTAnim = Parent.get_node("CRT Effect/AnimationPlayer")
 
 
@@ -50,14 +50,10 @@ func _on_Player_body_shape_exited(_body_rid, _body, _body_shape_index, _local_sh
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "CRT Off":
-		Parent.get_node("Enemy").visible = false
+		Parent.get_node("Game Objects").visible = false
 		Parent.get_node("TextureRect").visible = false
-		Parent.get_node("Cards UI").visible = false
-		Parent.get_node("frame").visible = false
-		Parent.get_node("Battle UI").visible = false
-		Parent.get_node("Gun").visible = false
-		Parent.get_node("Player").visible = false
-		Parent.get_node("LevelPlayer/Bullets").visible = false
+		Parent.get_node("UI Layer").visible = false
+
 		Parent.get_node("Game Over screen").visible = true
 		CRTAnim.play("CRT On")
 

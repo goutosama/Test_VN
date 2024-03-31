@@ -1,17 +1,23 @@
-extends AnimationPlayer
+extends Node
 
 export (Array, Resource) var lines
 
 func CreateBullets(line: BulletLine):
+	print("creating bullets!")
 	var bullet = BulletNode.new()
-	var path2d = Path2D.new()
-	path2d.curve = line.curve
-	bullet.set_script("res://danmaku/bullets/Bullet.gd")
+
+	bullet.curve2d = line.curve
+	bullet.set_script(load("res://danmaku/bullets/Bullet.gd"))
 	bullet.bullet_image = line.sprite
-	bullet.path2dPath = path2d
 	bullet.BulletParams = line.BulletParams
-	bullet.scale = 2.0
+	bullet.Scale = 2.0
 	bullet.AnimSlowness = 8
+	
+	add_child(bullet)
+
+func LogSomething(s: String):
+	print("log")
+	print(s)
 
 func _ready():
-	self.play("LevelAnim")
+	get_parent().play("LevelAnim")

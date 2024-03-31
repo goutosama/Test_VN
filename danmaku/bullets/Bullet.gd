@@ -3,9 +3,9 @@ class_name BulletNode
 export(Resource) var bullet_image = preload("res://danmaku/bullets/BulletSprite.tres")
 const bullet_propsRes: Resource = preload("res://danmaku/bullets/BulletPropResourse.tres")
 
-export var path2dPath: NodePath 
+export var curve2d: Curve2D
 #Path2D allows you to place Curve2d, BUT ROTATION WILL BE IGNORED
-onready var path := get_node(path2dPath) as Path2D 
+
 # Due to how Curve2D works (just as curve with baked points between real points), 
 # we can't make normals with those baked points, so every bullet's direction will
 # be determined by its previous and next point normal vector, 
@@ -33,6 +33,7 @@ export(int) var AnimSlowness = 4
 var bullets = []
 var shape
 var delays = []
+var path
 
 class Bullet:
 	var position = Vector2()
@@ -50,20 +51,26 @@ class Bullet:
 
 
 func _ready():
+	if curve2d != null:
+		var path2d := Path2D.new()
+		path2d.curve = curve2d
+		add_child(path2d)
+		path = get_child(0)
 	delays.resize(path.curve.get_point_count())
 
 	shape = Physics2DServer.circle_shape_create()
 	# Set the collision shape's radius for each bullet in pixels.
 	Physics2DServer.shape_set_data(shape, 2 * Scale)
 	var transform2d = Transform2D()
-
-	for _i in range(1, path.curve.get_point_count() - 1):
+	
+	print(path.curve.get_point_count())
+	for _i in range(1, path.curve.get_point_count() - 2):
 		var bullet = Bullet.new()
 
 		# Give each bullet its own speed.
 		bullet.speed = BulletParams[_i].speed * 10
 		var between = path.curve.get_point_position(_i - 1) - path.curve.get_point_position(_i + 1)
-		print(Vector2(between.y, -between.x).normalized())
+		#print(Vector2(between.y, -between.x).normalized())
 		var direction = Vector2(cos(BulletParams[_i].directionRadians), sin(BulletParams[_i].directionRadians))
 		bullet.direction = Vector2(between.y * direction.x - (-between.x) * direction.y, between.y * direction.y + (-between.x) * direction.x).normalized()
 

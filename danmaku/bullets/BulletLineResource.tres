@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://danmaku/bullets/BulletLine.gd" type="Script" id=1]
+[ext_resource path="res://danmaku/bullets/TestCurve.tres" type="Curve2D" id=2]
+[ext_resource path="res://danmaku/bullets/BulletSprite.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://danmaku/bullets/BulletPropResourse.tres" type="Resource" id=4]
+
+[resource]
+script = ExtResource( 1 )
+curve = ExtResource( 2 )
+BulletParams = [ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ) ]
+position = Vector2( 0, 0 )
+sprite = ExtResource( 3 )
