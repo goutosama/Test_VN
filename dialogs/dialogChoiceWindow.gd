@@ -4,7 +4,7 @@ extends MarginContainer
 onready var button1 = get_node("HBoxContainer/PanelContainer2/VBoxContainer/Button")
 onready var button2 = get_node("HBoxContainer/PanelContainer2/VBoxContainer/Button2")
 onready var button3 = get_node("HBoxContainer/PanelContainer2/VBoxContainer/Button3")
-onready var window = get_parent()
+onready var window = get_parent().get_parent()
 
 func _ready():
 	visible = false

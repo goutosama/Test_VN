@@ -5,13 +5,16 @@ export var speed = 1 # How fast the player will move (pixels/sec).
 export (bool) var isLocked = false
 onready var spriteScale = 8
 
+onready var _2d_3d = false if get_child(0).name == "AnimatedSprite3D" else true 
+
 onready var camera = get_parent().get_parent().get_node("Camera Pivot")
 
 signal showInteract
 signal hideInteract
 
 func _ready():
-	$AnimatedSprite3D.scale = Vector3.ONE * spriteScale
+	if !_2d_3d:
+		$AnimatedSprite3D.scale = Vector3.ONE * spriteScale
 
 func _physics_process(delta):
 	if !isLocked:
@@ -22,24 +25,25 @@ func _physics_process(delta):
 		if Input.is_action_pressed("ui_right"):
 			velocity += -forward.cross(Vector3.UP) / 1.5
 			#velocity.z = -1
-			$AnimatedSprite3D.flip_h = false
-			$AnimatedSprite3D.set_animation("side")
+			changeAnim(true, 'side')
+
 			
 
 		if Input.is_action_pressed("ui_left"):
 			velocity += forward.cross(Vector3.UP) / 1.5
+			changeAnim(false, 'side')
 
-			$AnimatedSprite3D.flip_h = true
-			$AnimatedSprite3D.set_animation("side")
 
 		if Input.is_action_pressed("ui_down"):
 			velocity += forward
-			$AnimatedSprite3D.set_animation("front")
+			changeAnim(false, 'back')
+
 
 			
 		if Input.is_action_pressed("ui_up"):
 			velocity += -forward
-			$AnimatedSprite3D.set_animation("back")
+			changeAnim(false, 'front')
+
 		
 		
 		print(move_and_collide(velocity))
@@ -61,3 +65,18 @@ func _on_Interact_body_shape_exited(body_rid, body, body_shape_index, local_shap
 	print("player hook")
 	emit_signal("hideInteract")
 	pass # Replace with function body.
+	
+func changeAnim(flip, anim):
+	match _2d_3d:
+		false:
+			if anim == "side":
+				$AnimatedSprite3D.flip_h = flip
+			$AnimatedSprite3D.set_animation(anim)
+		true:
+			for i in get_children():
+				if i.name.to_lower() == "side":
+					i.rotate_y(3.141593) if flip else i.rotate_y(0)
+				if i.name.to_lower() == anim:
+					i.visible = true
+				else:
+					i.visible = false

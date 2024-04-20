@@ -11,25 +11,26 @@ var InkPlayer = load("res://addons/inkgd/ink_player.gd")
 # ############################################################################ #
 # Public Nodes
 # ############################################################################ #
-
-# Alternatively, it could also be retrieved from the tree.
-# onready var _ink_player = $InkPlayer
 onready var _ink_player = $InkPlayer
 
 export var InkFile : Resource
 
-# ############################################################################ #
-# Lifecycle
-# ############################################################################ #
-onready var charNameBox = get_node("DialogueWindow/textWindow/M/HBox/VBox/M2/Pc")
-onready var textBox = get_node("DialogueWindow/textWindow/M/HBox/VBox/M/Pc/RichTextLabel")
-onready var choiceWindow = get_node("ChoiceWindow")
-onready var Illustration = get_node("Illustration")
 
-export (int) var maxTextLogLine = 8
+#export (int) var maxTextLogLine = 8
 export (String) var StartingKnot = "None"
 
 export (bool) var useTextLog = true
+
+# ############################################################################ #
+# Lifecycle
+# ############################################################################ #
+export var DialogueWindowPath : NodePath
+onready var dialogueWindow = get_node(DialogueWindowPath)
+onready var charNameBox = dialogueWindow.get_node(dialogueWindow.charNameBoxPath)
+onready var textBox = dialogueWindow.get_node(dialogueWindow.textBoxPath)
+onready var choiceWindow = get_node("Dialogue layer/ChoiceWindow")
+onready var Illustration = get_node("Background image/Illustration")
+onready var textLog = get_node("Popup layer/PopupPanel/TextLog")
 
 onready var textArray = []
 onready var choices = []
@@ -60,8 +61,6 @@ func _story_loaded(successfully: bool):
 		_ink_player.choose_path(StartingKnot)
 	_continue_story(false)
 
-
-
 # ############################################################################ #
 # Private Methods
 # ############################################################################ #
@@ -73,24 +72,27 @@ func _continue_story(isChoice: bool):
 		newLine.name = _ink_player.get_variable("name")
 		illustrate = _ink_player.get_variable("ill")
 		textBox.text = newLine.text
-		charNameBox.get_node("Center/Label").text    = newLine.name  
+		charNameBox.get_node("Center/Label").text = newLine.name
 		charNameBox.hideEmpty()
 		if isChoice:
 			var choose = newLine.text
 			newLine.text = ""
 			for n in choices.size():
 				if choices[n] + "\n" == choose:
-					choices[n] = "You choose " + choose
+					choices[n] = "You choose lol " + choose
 					newLine.text += choices[n] + "\n"
 				else:
 					newLine.text += choices[n] + "\n \n"
 			choices = []
 
-		textArray.append(newLine)
-		if textArray.size() > maxTextLogLine:
-			textArray.pop_front()
-		$PopupPanel/TextLog.on_log_update(textArray)
-		print(illustrate)
+# Do we need to store last lines in there?
+#		textArray.append(newLine)
+#		if textArray.size() > maxTextLogLine:
+#			textArray.pop_front()
+		textLog.on_log_update([newLine])
+		#print(illustrate)
+		
+		# NEEDS TESTING
 #		if illustrate == null:
 #			illustrate = "None"
 #		if illustrate != "None" || illustrate != "":
@@ -102,6 +104,9 @@ func _continue_story(isChoice: bool):
 		
 		# This text is a line of text from the ink story.
 		# Set the text of a Label to this value to display it in your game.
+		
+	# Choice methods return a string "You choose [answer]" as another line which is actually not needed behaviour
+	# Fix returning this thing and make an exclusive window inside text log if it's player's answer 				FIX!!!
 	if _ink_player.has_choices:
 		choiceWindow.runGetUpAnimation()
 		choiceWindow.button1.text = _ink_player.current_choices[0]
@@ -134,14 +139,16 @@ func _select_choice(index):
 	_continue_story(false)
 	choiceWindow.visible = false
 
-func _process(_delta):
-	if Input.is_action_just_pressed("ui_select") && $PopupPanel.visible == false:
-		_continue_story(false)
-	if Input.is_action_just_pressed("ui_down") && useTextLog:
-		if $PopupPanel.visible == false:
-			$PopupPanel.popup()
-		else:
-			$PopupPanel.visible = false
+func _input(event):
+	if event is InputEventKey:
+		if Input.is_action_just_pressed("ui_select") && textLog.get_parent().visible == false:
+			_continue_story(false)
+		if Input.is_action_just_pressed("ui_down") && useTextLog:
+			print("log", textLog.visible)
+			if textLog.get_parent().visible == false:
+				textLog.get_parent().popup()
+			else:
+				textLog.get_parent().visible = false
 
 # Uncomment to bind an external function.
 #

@@ -1,0 +1,14 @@
+[remap]
+
+importer="inkgd.ink.json"
+type="Resource"
+path="res://.import/test_file.json-20c4aba53db62d812a251d471026075b.res"
+
+[deps]
+
+source_file="res://isometric_boxes/ink_scripts/test_file.json"
+dest_files=[ "res://.import/test_file.json-20c4aba53db62d812a251d471026075b.res" ]
+
+[params]
+
+compress=true

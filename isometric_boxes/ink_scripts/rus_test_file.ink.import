@@ -1,0 +1,13 @@
+[remap]
+
+importer="inkgd.ink"
+type="Resource"
+path="res://.import/rus_test_file.ink-28860c775bc26616979d1db13dfb0e70.res"
+
+[deps]
+
+source_file="res://isometric_boxes/ink_scripts/rus_test_file.ink"
+dest_files=[ "res://.import/rus_test_file.ink-28860c775bc26616979d1db13dfb0e70.res" ]
+
+[params]
+

@@ -4,7 +4,7 @@
 [ext_resource path="res://isometric_boxes/assets/MainChar_images/mainCharFrames.tres" type="SpriteFrames" id=2]
 
 [sub_resource type="BoxShape" id=33]
-extents = Vector3( 0.385, 0.2, 0.36 )
+extents = Vector3( 0.205842, 0.2, 0.204304 )
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.272513, 0.680909, 1.15924 )
@@ -12,9 +12,8 @@ script = ExtResource( 1 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform( 4, 0, 0, 0, 3.99999, 0.0016406, 0, -0.0065624, 0.999999, 0.11, 0.412794, 0 )
-billboard = 1
-alpha_cut = 1
-render_priority = -2
+billboard = 2
+render_priority = -128
 frames = ExtResource( 2 )
 animation = "front"
 playing = true
